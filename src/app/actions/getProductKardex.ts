@@ -15,7 +15,10 @@ const getProductKardex = async (ean: string, startDate: string, endDate: string)
             params: {
                 start_date: startDate,
                 end_date: endDate
-            }
+            },
+            headers: {
+                'ngrok-skip-browser-warning': 'any value'
+            },
         });
 
         console.log('getProductKardex response', response.data);

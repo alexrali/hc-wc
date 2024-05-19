@@ -14,7 +14,10 @@ const getProductListing = async (ean: string): Promise<GetProductListingAction> 
         const response = await axios.get(`https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/listing`, {
             params: {
                 ean: ean
-            }
+            },
+            headers: {
+                'ngrok-skip-browser-warning': 'any value'
+            },
         });
 
         console.log('getProductListing response', response.data);

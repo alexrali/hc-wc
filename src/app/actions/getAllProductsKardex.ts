@@ -22,6 +22,9 @@ const getAllProductsKardex = async (startDate: string, endDate: string): Promise
                 start_date: startDate,
                 end_date: endDate
             },
+            headers: {
+                'ngrok-skip-browser-warning': 'any value'
+            },
             responseType: 'arraybuffer' // Set responseType to 'arraybuffer' or 'blob'
         })
             .catch(error => {
