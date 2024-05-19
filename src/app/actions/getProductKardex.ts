@@ -11,7 +11,7 @@ const getProductKardex = async (ean: string, startDate: string, endDate: string)
     console.log('getProductKardex called with', { ean, startDate, endDate });
 
     try {
-        const response = await axios.get(`http://192.168.0.119:80/api/v1/products/${ean}/kardex`, {
+        const response = await axios.get(`https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/${ean}/kardex`, {
             params: {
                 start_date: startDate,
                 end_date: endDate

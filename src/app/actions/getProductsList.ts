@@ -10,7 +10,7 @@ interface GetProductListingAction {
 const getProductList = async (ean: string): Promise<GetProductListingAction> => {
     try {
         // Include the 'ean' in the URL
-        const response = await axios.get(`http://192.168.0.119:80/api/v1/products/products/${ean}`);
+        const response = await axios.get(`https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/products/${ean}`);
 
         console.log('getProductListing response', response.data);
 
