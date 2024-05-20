@@ -173,10 +173,10 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         const formattedStartDate = format(startDate, 'yyyy-MM-dd');
                         const formattedEndDate = format(endDate, 'yyyy-MM-dd');
 
-                        const fileName = `response_${formattedStartDate}_${formattedEndDate}_${formattedCurrentDate}.zip`;
+                        const fileName = `desde_${formattedStartDate}hasta_${formattedEndDate}_en${formattedCurrentDate}.zip`;
                         
                         // append word 'kardex' to the file name
-                        link.download = 'kardex ' + fileName;
+                        link.download = 'kardex_' + fileName;
 
                         // Set the 'download' attribute to the desired file name
                         // link.download = 'response.zip';
