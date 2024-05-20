@@ -48,6 +48,8 @@ import { KardexSummary } from '../models/KardexSummary';
 import { Toggle } from '@/components/ui/toggle';
 import { Switch } from '@/components/ui/switch';
 import getAllProductsKardex from '../actions/getAllProductsKardex';
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from '@reach/alert-dialog';
+
 
 
 interface ProductSelectorProps {
@@ -68,6 +70,8 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
     const [selectedProduct, setValue] = useState<Product | undefined>(undefined); // [ean, setEan
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const [date, setDate] = React.useState<DateRange | undefined>(() => {
         const now = new Date();
@@ -139,71 +143,73 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
             //check if date?.from and date?.to are not null
 
             console.log('isSwitchOn', isSwitchOn);
+            setIsDialogOpen(true);
 
-            if (date?.from && date?.to) {
-                const startDate = format(date.from, 'yyyy-MM-dd');
-                const endDate = format(date.to, 'yyyy-MM-dd');
-                console.log('Calling API methods with', { startDate, endDate });
+            // if (date?.from && date?.to) {
+            //     const startDate = format(date.from, 'yyyy-MM-dd');
+            //     const endDate = format(date.to, 'yyyy-MM-dd');
+            //     console.log('Calling API methods with', { startDate, endDate });
 
-                setIsLoading(true);
+            //     setIsLoading(true);
 
-                // Construct the URL with the start and end dates
-                const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
+            //     // Construct the URL with the start and end dates
+            //     const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
 
-                // Fetch the file
-                fetch(url, {
-                    headers: {
-                        'ngrok-skip-browser-warning': 'any value'
-                    }
-                })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        // Create a new 'a' element
-                        const link = document.createElement('a');
+            //     // Fetch the file
+            //     fetch(url, {
+            //         headers: {
+            //             'ngrok-skip-browser-warning': 'any value'
+            //         }
+            //     })
+            //         .then(response => response.blob())
+            //         .then(blob => {
+            //             // Create a new 'a' element
+            //             const link = document.createElement('a');
 
-                        // Create an object URL for the Blob
-                        const url = URL.createObjectURL(blob);
+            //             // Create an object URL for the Blob
+            //             const url = URL.createObjectURL(blob);
 
-                        // Set the 'href' attribute to the object URL
-                        link.href = url;
+            //             // Set the 'href' attribute to the object URL
+            //             link.href = url;
 
-                        // Set the file name considering the start and end dates and the date of download as the current date
-                        const currentDate = new Date();
-                        const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
-                        const formattedStartDate = format(startDate, 'yyyy-MM-dd');
-                        const formattedEndDate = format(endDate, 'yyyy-MM-dd');
+            //             // Set the file name considering the start and end dates and the date of download as the current date
+            //             const currentDate = new Date();
+            //             const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
+            //             const formattedStartDate = format(startDate, 'yyyy-MM-dd');
+            //             const formattedEndDate = format(endDate, 'yyyy-MM-dd');
 
-                        const fileName = `desde_${formattedStartDate}hasta_${formattedEndDate}_en${formattedCurrentDate}.zip`;
-                        
-                        // append word 'kardex' to the file name
-                        link.download = 'kardex_' + fileName;
+            //             const fileName = `desde_${formattedStartDate}hasta_${formattedEndDate}_en${formattedCurrentDate}.zip`;
 
-                        // Set the 'download' attribute to the desired file name
-                        // link.download = 'response.zip';
+            //             // append word 'kardex' to the file name
+            //             link.download = 'kardex_' + fileName;
 
-                        // Append the 'a' element to the body
-                        document.body.appendChild(link);
+            //             // Set the 'download' attribute to the desired file name
+            //             // link.download = 'response.zip';
 
-                        // Programmatically click the 'a' element to start the file download
-                        link.click();
+            //             // Append the 'a' element to the body
+            //             document.body.appendChild(link);
 
-                        // Remove the 'a' element from the body after the download starts
-                        document.body.removeChild(link);
+            //             // Programmatically click the 'a' element to start the file download
+            //             link.click();
 
-                        setIsLoading(false);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        setIsLoading(false);
-                    });
-            } else {
-                console.log('No valid data provided - toast shown');
-                toast({
-                    title: "Sin datos suficientes",
-                    variant: "destructive",
-                    description: "Ingresa un rango de fechas.",
-                });
-            }
+            //             // Remove the 'a' element from the body after the download starts
+            //             document.body.removeChild(link);
+
+            //             setIsLoading(false);
+            //         })
+            //         .catch(error => {
+            //             console.error('Error:', error);
+            //             setIsLoading(false);
+            //         });
+            // } else {
+            //     console.log('No valid data provided - toast shown');
+            //     toast({
+            //         title: "Sin datos suficientes",
+            //         variant: "destructive",
+            //         description: "Ingresa un rango de fechas.",
+            //     });
+            // }
+
         } else {
 
             if (selectedProduct?.ean && date?.from && date?.to) {
@@ -327,6 +333,93 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         </Button>
                     </div>
                 </div>
+
+
+                <AlertDialog>
+                    <AlertDialogTrigger as={React.Fragment} />
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your account
+                                and remove your data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => {
+                                setIsDialogOpen(false);
+                                
+                                if (date?.from && date?.to) {
+                                    const startDate = format(date.from, 'yyyy-MM-dd');
+                                    const endDate = format(date.to, 'yyyy-MM-dd');
+                                    console.log('Calling API methods with', { startDate, endDate });
+                    
+                                    setIsLoading(true);
+                    
+                                    // Construct the URL with the start and end dates
+                                    const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
+                    
+                                    // Fetch the file
+                                    fetch(url, {
+                                        headers: {
+                                            'ngrok-skip-browser-warning': 'any value'
+                                        }
+                                    })
+                                        .then(response => response.blob())
+                                        .then(blob => {
+                                            // Create a new 'a' element
+                                            const link = document.createElement('a');
+                    
+                                            // Create an object URL for the Blob
+                                            const url = URL.createObjectURL(blob);
+                    
+                                            // Set the 'href' attribute to the object URL
+                                            link.href = url;
+                    
+                                            // Set the file name considering the start and end dates and the date of download as the current date
+                                            const currentDate = new Date();
+                                            const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
+                                            const formattedStartDate = format(startDate, 'yyyy-MM-dd');
+                                            const formattedEndDate = format(endDate, 'yyyy-MM-dd');
+                    
+                                            const fileName = `desde_${formattedStartDate}hasta_${formattedEndDate}_en${formattedCurrentDate}.zip`;
+                    
+                                            // append word 'kardex' to the file name
+                                            link.download = 'kardex_' + fileName;
+                    
+                                            // Set the 'download' attribute to the desired file name
+                                            // link.download = 'response.zip';
+                    
+                                            // Append the 'a' element to the body
+                                            document.body.appendChild(link);
+                    
+                                            // Programmatically click the 'a' element to start the file download
+                                            link.click();
+                    
+                                            // Remove the 'a' element from the body after the download starts
+                                            document.body.removeChild(link);
+                    
+                                            setIsLoading(false);
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            setIsLoading(false);
+                                        });
+                                } else {
+                                    console.log('No valid data provided - toast shown');
+                                    toast({
+                                        title: "Sin datos suficientes",
+                                        variant: "destructive",
+                                        description: "Ingresa un rango de fechas.",
+                                    });
+                                }
+
+                            }}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
             </CardContent>
         </Card>
     );
