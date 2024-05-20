@@ -167,8 +167,19 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         // Set the 'href' attribute to the object URL
                         link.href = url;
 
+                        // Set the file name considering the start and end dates and the date of download as the current date
+                        const currentDate = new Date();
+                        const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
+                        const formattedStartDate = format(startDate, 'yyyy-MM-dd');
+                        const formattedEndDate = format(endDate, 'yyyy-MM-dd');
+
+                        const fileName = `response_${formattedStartDate}_${formattedEndDate}_${formattedCurrentDate}.zip`;
+                        
+                        // append word 'kardex' to the file name
+                        link.download = 'kardex ' + fileName;
+
                         // Set the 'download' attribute to the desired file name
-                        link.download = 'response.zip';
+                        // link.download = 'response.zip';
 
                         // Append the 'a' element to the body
                         document.body.appendChild(link);
