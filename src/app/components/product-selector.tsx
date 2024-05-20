@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { addDays, format, set } from "date-fns"
+import { addDays, format, set} from "date-fns"
+import { es } from "date-fns/locale"
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -236,7 +237,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
             <CardHeader className="pb-3">
                 <div className="flex justify-between items-center">
                     <CardTitle>Consulta</CardTitle>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 ">
                         <Switch 
                             id="full-mode" 
                             checked={isSwitchOn}
@@ -247,8 +248,8 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="grid gap-6 sm:grid-cols-2 grid-cols-2">
-                    <div className="grid gap-3 pt-3 items-center">
+                <div className="grid gap-3 sm:grid-cols-2 grid-cols-2 pt-3">
+                    <div className="grid gap-3 items-center">
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
@@ -282,17 +283,18 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                                     selected={date}
                                     onSelect={setDate}
                                     numberOfMonths={2}
+                                    locale={es}
                                 />
                             </PopoverContent>
                         </Popover>
                     </div>
 
-                    <div className="relative ml-auto flex-1 md:grow-0 pt-3">
-                        <ScanBarcodeIcon className="absolute left-2.5 top-6 h-4 w-4 mr-2" />
+                    <div className="relative ml-auto flex-1 md:grow-0">
+                        <ScanBarcodeIcon className="absolute left-2.5 top-2.5 h-4 w-4 mr-2" />
                         <ProductListingCombo onProductSelect={(selectedProduct: any) => setValue(selectedProduct)} />
                     </div>
 
-                    <div className="grid gap-3 col-span-2">
+                    <div className="grid col-span-2">
                         <Button variant="outline" onClick={handleConsultarClick}>
                             Consultar
                         </Button>
