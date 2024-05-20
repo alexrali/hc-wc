@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { addDays, format, set} from "date-fns"
+import { addDays, format, set } from "date-fns"
 import { es } from "date-fns/locale"
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
@@ -144,31 +144,47 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                 const startDate = format(date.from, 'yyyy-MM-dd');
                 const endDate = format(date.to, 'yyyy-MM-dd');
                 console.log('Calling API methods with', { startDate, endDate });
-        
+
                 setIsLoading(true);
-        
+
                 // Construct the URL with the start and end dates
                 const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
-        
-                // Create a new 'a' element
-                const link = document.createElement('a');
-        
-                // Set the 'href' attribute to the URL
-                link.href = url;
-        
-                // Set the 'download' attribute to the desired file name
-                link.download = 'response.zip';
-        
-                // Append the 'a' element to the body
-                document.body.appendChild(link);
-        
-                // Programmatically click the 'a' element to start the file download
-                link.click();
-        
-                // Remove the 'a' element from the body after the download starts
-                document.body.removeChild(link);
-        
-                setIsLoading(false);
+
+                // Fetch the file
+                fetch(url, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'any value'
+                    }
+                })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        // Create a new 'a' element
+                        const link = document.createElement('a');
+
+                        // Create an object URL for the Blob
+                        const url = URL.createObjectURL(blob);
+
+                        // Set the 'href' attribute to the object URL
+                        link.href = url;
+
+                        // Set the 'download' attribute to the desired file name
+                        link.download = 'response.zip';
+
+                        // Append the 'a' element to the body
+                        document.body.appendChild(link);
+
+                        // Programmatically click the 'a' element to start the file download
+                        link.click();
+
+                        // Remove the 'a' element from the body after the download starts
+                        document.body.removeChild(link);
+
+                        setIsLoading(false);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        setIsLoading(false);
+                    });
             } else {
                 console.log('No valid data provided - toast shown');
                 toast({
@@ -238,10 +254,10 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                 <div className="flex justify-between items-center">
                     <CardTitle>Consulta</CardTitle>
                     <div className="flex items-center space-x-2 ">
-                        <Switch 
-                            id="full-mode" 
+                        <Switch
+                            id="full-mode"
                             checked={isSwitchOn}
-                            onCheckedChange={setIsSwitchOn} 
+                            onCheckedChange={setIsSwitchOn}
                         />
                         <Label htmlFor="full-mode" className="text-xs">Todos los códigos</Label>
                     </div>
