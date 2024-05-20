@@ -148,7 +148,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                 setIsLoading(true);
         
                 // Construct the URL with the start and end dates
-                const url = `http://192.168.0.119/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
+                const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
         
                 // Create a new 'a' element
                 const link = document.createElement('a');
