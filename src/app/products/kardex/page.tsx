@@ -299,6 +299,7 @@ const handleProductInformationChange = (kardexData: KardexEntry[] | null) => {
                 onProductSummaryChange={handleProductSummaryChange}
                 onKardexSummaryChange={handleKardexSummaryChange}
                 setIsLoading={setIsLoading}
+                isLoading={isLoading}
               />
 
               {/* <Card
