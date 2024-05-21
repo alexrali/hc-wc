@@ -48,7 +48,22 @@ import { KardexSummary } from '../models/KardexSummary';
 import { Toggle } from '@/components/ui/toggle';
 import { Switch } from '@/components/ui/switch';
 import getAllProductsKardex from '../actions/getAllProductsKardex';
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from '@reach/alert-dialog';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Progress } from "@/components/ui/progress"
+import axios from 'axios';
+import { AxiosProgressEvent } from 'axios';
+
+
 
 
 
@@ -57,21 +72,45 @@ interface ProductSelectorProps {
     onProductSummaryChange: (summaryData: ProductSummary | null) => void;
     onKardexSummaryChange: (kardexSummary: KardexSummary[] | null) => void;
     setIsLoading: (isLoading: boolean) => void;
+    isLoading: boolean;
 }
 
 const ProductSelector: React.FC<ProductSelectorProps> = ({
     onProductSummaryChange,
     onKardexSummaryChange,
     onProductInformationChange,
-    setIsLoading
+    setIsLoading,
+    isLoading,
 }) => {
     const [ean, setEan] = useState('');
     const { toast } = useToast();
     const [selectedProduct, setValue] = useState<Product | undefined>(undefined); // [ean, setEan
-
     const [isSwitchOn, setIsSwitchOn] = useState(false);
-
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isProgressLoading, setIsProgressLoading] = React.useState(false);
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (isProgressLoading) {
+            const timer = setInterval(() => {
+                // Calculate the progress based on some logic
+                let newProgress = Math.min(progress + Math.floor(Math.random() * 10) + 1, 100); // increment by a random value between 1 and 10, but not exceeding 100
+
+                setProgress(newProgress);
+            }, 1500);
+
+            return () => clearInterval(timer);
+        } else {
+            setProgress(0);
+        }
+    }, [isProgressLoading, progress]);
+
+    // const onDownloadProgress = (progressEvent: AxiosProgressEvent) => {
+    //     if (progressEvent.total) {
+    //       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    //       setProgress(percentCompleted);
+    //     }
+    //   }
 
     const [date, setDate] = React.useState<DateRange | undefined>(() => {
         const now = new Date();
@@ -334,77 +373,93 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                     </div>
                 </div>
 
-
-                <AlertDialog>
-                    <AlertDialogTrigger as={React.Fragment} />
+                <AlertDialog open={isDialogOpen}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogTitle>Confirma acción</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your account
-                                and remove your data from our servers.
+                                Dependiendo del período a consultar la descarga puede tardar varios minutos.
+                                Asegura que las fechas sean correctas antes de continuar.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
+                        <div className='mt-3'>
+                            <Progress value={progress} className="w-[100%]" />
+                        </div>
                         <AlertDialogFooter>
-                            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancel</AlertDialogCancel>
+                            {/* <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancelar</AlertDialogCancel> */}
+                            <AlertDialogCancel onClick={() => setIsDialogOpen(false)} aria-disabled={isLoading}  
+                                disabled={isLoading}>Cancelar</AlertDialogCancel>
+
                             <AlertDialogAction onClick={() => {
-                                setIsDialogOpen(false);
-                                
+
+                                setIsLoading(true);
+
                                 if (date?.from && date?.to) {
                                     const startDate = format(date.from, 'yyyy-MM-dd');
                                     const endDate = format(date.to, 'yyyy-MM-dd');
                                     console.log('Calling API methods with', { startDate, endDate });
-                    
-                                    setIsLoading(true);
-                    
+
+
+                                    setIsProgressLoading(true);
+
                                     // Construct the URL with the start and end dates
                                     const url = `https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
-                    
+
                                     // Fetch the file
-                                    fetch(url, {
+                                    axios.get(url, {
                                         headers: {
                                             'ngrok-skip-browser-warning': 'any value'
-                                        }
+                                        },
+
+                                        responseType: 'blob'
                                     })
-                                        .then(response => response.blob())
-                                        .then(blob => {
+                                        .then(response => {
+                                            console.log(response.headers['content-length']);
+
+                                            const blob = response.data
+
                                             // Create a new 'a' element
                                             const link = document.createElement('a');
-                    
+
                                             // Create an object URL for the Blob
                                             const url = URL.createObjectURL(blob);
-                    
+
                                             // Set the 'href' attribute to the object URL
                                             link.href = url;
-                    
+
                                             // Set the file name considering the start and end dates and the date of download as the current date
                                             const currentDate = new Date();
                                             const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
                                             const formattedStartDate = format(startDate, 'yyyy-MM-dd');
                                             const formattedEndDate = format(endDate, 'yyyy-MM-dd');
-                    
+
                                             const fileName = `desde_${formattedStartDate}hasta_${formattedEndDate}_en${formattedCurrentDate}.zip`;
-                    
+
                                             // append word 'kardex' to the file name
                                             link.download = 'kardex_' + fileName;
-                    
+
                                             // Set the 'download' attribute to the desired file name
                                             // link.download = 'response.zip';
-                    
+
                                             // Append the 'a' element to the body
                                             document.body.appendChild(link);
-                    
+
                                             // Programmatically click the 'a' element to start the file download
                                             link.click();
-                    
+
                                             // Remove the 'a' element from the body after the download starts
                                             document.body.removeChild(link);
-                    
+
+                                            setIsProgressLoading(false);
                                             setIsLoading(false);
+                                            setIsDialogOpen(false);
                                         })
                                         .catch(error => {
                                             console.error('Error:', error);
+
+                                            setIsProgressLoading(false);
                                             setIsLoading(false);
+                                            setIsDialogOpen(false);
                                         });
                                 } else {
                                     console.log('No valid data provided - toast shown');
@@ -414,8 +469,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                                         description: "Ingresa un rango de fechas.",
                                     });
                                 }
-
-                            }}>Continue</AlertDialogAction>
+                            }} disabled={isLoading}>Confirmar y Descargar</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
