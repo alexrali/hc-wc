@@ -87,8 +87,10 @@ export function ProductListingCombo({ onProductSelect }: { onProductSelect: any 
                         className='w-full rounded-lg bg-background font-medium text-sm'
                     />
                     <CommandEmpty>Sin coincidencias.</CommandEmpty>
-                    <ScrollArea className="h-[250px] ">
-                        <CommandGroup>
+                    <ScrollArea 
+                        className="h-[200px] "
+                    >
+                        <CommandGroup >
                             {
                                 Array.isArray(products) && products.length > 0
                                     ?

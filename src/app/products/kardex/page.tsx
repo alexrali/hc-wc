@@ -419,10 +419,10 @@ const handleProductInformationChange = (kardexData: KardexEntry[] | null) => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 gap-1 text-sm"
+                        className="h-7 gap-1"
                       >
                         <ListFilter className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only">Filtrar</span>
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filtrar</span>
                       </Button>
                     </DropdownMenuTrigger>
                     {/* //TODO: enable filter by status  */}
@@ -441,13 +441,13 @@ const handleProductInformationChange = (kardexData: KardexEntry[] | null) => {
                     </DropdownMenuContent> */}
                   </DropdownMenu>
                   <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-7 gap-1 text-sm"
+                    
+                    size="sm" variant="outline" className="h-7 gap-1"
+
                     onClick={handleExport}
                   >
                     <File className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only">Exportar</span>
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Exportar</span>
                   </Button>
                 </div>
               </div>
