@@ -387,7 +387,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         </div>
                         <AlertDialogFooter>
                             {/* <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancelar</AlertDialogCancel> */}
-                            <AlertDialogCancel onClick={() => setIsDialogOpen(false)} aria-disabled={isLoading}  
+                            <AlertDialogCancel onClick={() => setIsDialogOpen(false)} aria-disabled={isLoading}
                                 disabled={isLoading}>Cancelar</AlertDialogCancel>
 
                             <AlertDialogAction onClick={() => {
