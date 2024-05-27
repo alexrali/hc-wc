@@ -7,10 +7,11 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 import { labels, priorities, statuses } from "../data/data"
 import { Task } from "../data/schema"
+import { Listing } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Listing>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,32 +37,71 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "clave",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="Clave" className="text-xs" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="w-[80px] text-xs">{row.getValue("clave")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "title",
+    accessorKey: "descripcion",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Descripcion" />
     ),
     cell: ({ row }) => {
       const label = labels.find((label) => label.value === row.original.label)
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
+          <span className="max-w-[400px] truncate font-bold">
+            {row.getValue("descripcion")}
           </span>
+
+          {label && <Badge variant="outline">{label.label}</Badge>}
+
         </div>
       )
     },
   },
+  {
+    accessorKey: "presentacion",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Presentacion" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[20px]">{row.getValue("presentacion")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "ultima_venta",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="U. Venta" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[85px]">{row.getValue("ultima_venta")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "ultima_compra",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="U. Compra" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[85px]">{row.getValue("ultima_compra")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "existencia",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="EX" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[30px] font-bold">{row.getValue("existencia")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+
   {
     accessorKey: "status",
     header: ({ column }) => (
@@ -81,7 +121,7 @@ export const columns: ColumnDef<Task>[] = [
           {status.icon && (
             <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
-          <span>{status.label}</span>
+          <span className="font-bold text-xs">{status.label}</span>
         </div>
       )
     },
@@ -104,17 +144,44 @@ export const columns: ColumnDef<Task>[] = [
       }
 
       return (
-        <div className="flex items-center">
+        <div className="flex w-[70px] items-center">
           {priority.icon && (
             <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
-          <span>{priority.label}</span>
+          <span className="font-bold text-xs">{priority.label}</span>
         </div>
       )
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
+  },
+  {
+    accessorKey: "ultimo_costo",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="UC" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("ultimo_costo"))}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "costo_promedio",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="CP" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("costo_promedio"))}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "P3",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="P3" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("P3"))}</div>,
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     id: "actions",

@@ -69,3 +69,14 @@ export const priorities = [
     icon: ArrowUpIcon,
   },
 ]
+
+
+
+// label=["bug","feature","documentation"]
+
+
+// status=["backlog","todo","in progress","done","canceled"]
+
+
+// priority=["low","medium","high"]
+
