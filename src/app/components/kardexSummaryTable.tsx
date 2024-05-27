@@ -13,7 +13,7 @@ const KardexSummaryTable: React.FC<KardexSummaryProps> = ({ kardexSummary }) => 
     const kardexSummaryS = Array.isArray(kardexSummary) ? kardexSummary.filter(item => item.clase === 'S') : [];
     return (
         <div>
-            <ScrollArea className="h-[370px] overflow-auto">
+            <ScrollArea className="h-[375px] overflow-auto">
                 <div className="font-semibold">Movimientos de Entrada</div>
                 <div className="grid gap-3 mt-3">
                     {kardexSummaryE.length > 0 ? kardexSummaryE.map((item, index) => (

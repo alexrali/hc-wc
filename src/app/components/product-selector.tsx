@@ -105,19 +105,13 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
         }
     }, [isProgressLoading, progress]);
 
-    // const onDownloadProgress = (progressEvent: AxiosProgressEvent) => {
-    //     if (progressEvent.total) {
-    //       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-    //       setProgress(percentCompleted);
-    //     }
-    //   }
-
     const [date, setDate] = React.useState<DateRange | undefined>(() => {
         const now = new Date();
         const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
         return {
             from: firstDayOfMonth,
-            to: addDays(firstDayOfMonth, 20),
+            to: lastDayOfMonth,
         };
     });
 
@@ -320,7 +314,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="grid gap-3 sm:grid-cols-2 grid-cols-2 pt-3">
+                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 pt-3">
                     <div className="grid gap-3 items-center">
                         <Popover>
                             <PopoverTrigger asChild>
@@ -361,7 +355,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         </Popover>
                     </div>
 
-                    <div className="relative ml-auto flex-1 md:grow-0">
+                    <div className="relative ml-auto flex-1 md:grow-0 w-full">
                         <ScanBarcodeIcon className="absolute left-2.5 top-2.5 h-4 w-4 mr-2" />
                         <ProductListingCombo onProductSelect={(selectedProduct: any) => setValue(selectedProduct)} />
                     </div>

@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Link from "next/link"
@@ -53,14 +52,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+
 import {
   Pagination,
   PaginationContent,
@@ -68,16 +60,6 @@ import {
 } from "@/components/ui/pagination"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import {
   Tabs,
   TabsContent,
@@ -85,29 +67,17 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 
-import { format } from "date-fns"
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import Sidebar from "@/app/components/sidebar"
 import ProductSelector from "@/app/components/product-selector"
 
 import ProductKardexTable from "../components/productKardexTable";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import { ProductSummary } from "@/app/models/ProductSummary";
 import { KardexSummary } from "@/app/models/KardexSummary";
 import { KardexEntry } from "@/app/models/KardexEntry"
 
 import KardexSummaryTable from "@/app/components/kardexSummaryTable";
 import * as XLSX from 'xlsx';
-
-import NextTopLoader from 'nextjs-toploader';
-
 
 export default function Kardex() {
 
@@ -173,10 +143,7 @@ export default function Kardex() {
 
   return (
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
-
-        <NextTopLoader />
         <Sidebar />
-
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
             {/* <Sheet>
@@ -384,7 +351,6 @@ export default function Kardex() {
                     </CardFooter>
                   </Card>
                 )}
-
                 {isLoading ? (
                   <Skeleton />
                 ) : (
@@ -439,9 +405,7 @@ export default function Kardex() {
                     </DropdownMenuContent> */}
                     </DropdownMenu>
                     <Button
-
                       size="sm" variant="outline" className="h-7 gap-1"
-
                       onClick={handleExport}
                     >
                       <File className="h-3.5 w-3.5" />
@@ -560,7 +524,6 @@ export default function Kardex() {
                   </div>
                 </div> */}
                       <Separator className="my-2" />
-
                       <KardexSummaryTable kardexSummary={kardexSummary} />
 
                       {/* <div className="font-semibold">Resumen del Periodo</div>

@@ -65,7 +65,7 @@ export function ProductListingCombo({ onProductSelect }: { onProductSelect: any 
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="justify-between w-[200px] pl-8"
+                    className="justify-between w-full pl-8"
                 >
                     {
                         value && products && products.length > 0

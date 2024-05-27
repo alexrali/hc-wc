@@ -16,7 +16,7 @@ interface ProductKardexTableProps {
 
 const ProductKardexTable: React.FC<ProductKardexTableProps> = ({ productKardex }) => {
   return (
-    <ScrollArea className="h-[475px] rounded-md border">
+    <ScrollArea className="h-[485px] rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
