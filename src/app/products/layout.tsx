@@ -10,7 +10,7 @@ export default function ProductsLayout({ children }: LayoutProps) {
     <>
       {children}
 
-      <footer className="border-t border-border/90 sticky bottom-0 w-full bg-white">
+      {/* <footer className="border-t border-border/90 sticky bottom-0 w-full bg-white">
         <div className="flex flex-col items-start md:flex-row h-[40px]">
           <p className="text-left text-xs leading-loose font-medium text-muted-foreground pl-20 pt-2">
             Construido para {" "}
@@ -34,7 +34,7 @@ export default function ProductsLayout({ children }: LayoutProps) {
             .
           </p>
         </div>
-      </footer>
+      </footer> */}
 
     </>
   );
