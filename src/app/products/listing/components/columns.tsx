@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { labels, priorities, statuses } from "../data/data"
+import { labels, priorities, statuses, compradores } from "../data/data"
 import { Task } from "../data/schema"
 import { Listing } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
@@ -182,6 +182,34 @@ export const columns: ColumnDef<Listing>[] = [
     cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("P3"))}</div>,
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "comprador",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="C" className="text-xs" />
+    ),
+    
+    cell: ({ row }) => {
+      const comprador = compradores.find(
+        (comprador) => comprador.value === row.getValue("comprador")
+      )
+
+      if (!comprador) {
+        return null
+      }
+
+      return (
+        <div className="flex w-[10px] items-center">
+          <span className="font-bold text-xs">{comprador.label}</span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+
+    enableSorting: false,
+    enableHiding: true,
   },
   {
     id: "actions",

@@ -26,7 +26,10 @@ export const listingSchema = z.object({
   UT: z.string().optional(),
   status: z.string(),
   label: z.string(), 
-  priority: z.string()
+  priority: z.string(), 
+  linea: z.string().optional(),
+  proveedor: z.string().optional(), 
+  comprador: z.string().optional()
 })
 
 export type Listing = z.infer<typeof listingSchema>
