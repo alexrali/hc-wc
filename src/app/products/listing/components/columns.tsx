@@ -161,7 +161,7 @@ export const columns: ColumnDef<Listing>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="UC" className="text-xs" />
     ),
-    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("ultimo_costo"))}</div>,
+    cell: ({ row }) => <div className="w-[40px] text-xs">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("ultimo_costo"))}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -170,7 +170,7 @@ export const columns: ColumnDef<Listing>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="CP" className="text-xs" />
     ),
-    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("costo_promedio"))}</div>,
+    cell: ({ row }) => <div className="w-[40px] text-xs">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("costo_promedio"))}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -179,7 +179,16 @@ export const columns: ColumnDef<Listing>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="P3" className="text-xs" />
     ),
-    cell: ({ row }) => <div className="w-[40px]">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("P3"))}</div>,
+    cell: ({ row }) => <div className="w-[40px] text-xs">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(row.getValue("P3"))}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "UT",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="UT" className="text-xs" />
+    ),
+    cell: ({ row }) => <div className="w-[30px] text-xs">{String(row.getValue("UT")).trimEnd()}% </div>,
     enableSorting: false,
     enableHiding: false,
   },
