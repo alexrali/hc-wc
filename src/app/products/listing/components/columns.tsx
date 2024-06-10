@@ -105,7 +105,7 @@ export const columns: ColumnDef<Listing>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title="Estado" />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
@@ -132,7 +132,7 @@ export const columns: ColumnDef<Listing>[] = [
   {
     accessorKey: "priority",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
+      <DataTableColumnHeader column={column} title="Prioridad" />
     ),
     cell: ({ row }) => {
       const priority = priorities.find(

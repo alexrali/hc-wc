@@ -43,30 +43,30 @@ export const compradores = [
 
 export const statuses = [
   {
-    value: "backlog",
-    label: "Backlog",
+    value: "Faltante",
+    label: "Faltante",
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: "todo",
-    label: "Todo",
+    value: "Programado",
+    label: "Programado",
     icon: CircleIcon,
   },
   {
-    value: "in progress",
-    label: "In Progress",
+    value: "Excedente",
+    label: "Excedente",
     icon: StopwatchIcon,
   },
   {
-    value: "done",
-    label: "Done",
+    value: "Normal",
+    label: "Normal",
     icon: CheckCircledIcon,
   },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
-  },
+  // {
+  //   value: "canceled",
+  //   label: "Canceled",
+  //   icon: CrossCircledIcon,
+  // },
 ]
 
 export const priorities = [

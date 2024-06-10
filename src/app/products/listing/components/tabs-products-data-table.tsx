@@ -52,7 +52,7 @@ import {
 
 async function fetchTasks(type: string) {
     let url = 'https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/listing';
-    if (type) {
+    if (type && type !== 'active') {
         url += `?ean=${type}`;
     }
 
@@ -75,19 +75,25 @@ export function ProductDataTableTabs() {
 
     type ListingSchemaType = z.infer<typeof listingSchema>;
 
-    const [tasks, setTasks] = useState<ListingSchemaType[]>([]);
-    const [selectedTab, setSelectedTab] = useState('');
+    const [tasks, setTasks] = useState<Record<string, ListingSchemaType[]>>({});
+    const [selectedTab, setSelectedTab] = useState('active');
 
     useEffect(() => {
-        fetchTasks(selectedTab).then(setTasks);
-    }, [selectedTab]);
+        if (!tasks[selectedTab]) {
+            console.log(`Fetching tasks for tab: ${selectedTab}`);
+            fetchTasks(selectedTab).then((newTasks) => {
+                setTasks((prevTasks) => ({ ...prevTasks, [selectedTab]: newTasks }));
+            });
+        }
+    }, [selectedTab, tasks]);
+
 
     return (
         <>
             <Tabs defaultValue="active">
                 <div className="flex items-center">
                     <TabsList>
-                        <TabsTrigger value="active" onClick={() => setSelectedTab('')}>Activos</TabsTrigger>
+                        <TabsTrigger value="active" onClick={() => setSelectedTab('active')}>Activos</TabsTrigger>
                         <TabsTrigger value="draft" onClick={() => setSelectedTab('Z')}>Inactivos</TabsTrigger>
                         <TabsTrigger value="archived" className="hidden sm:flex" onClick={() => setSelectedTab('ZZ')}>
                             Descatalogados
