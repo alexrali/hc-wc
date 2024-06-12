@@ -62,6 +62,11 @@ export const statuses = [
     label: "Normal",
     icon: CheckCircledIcon,
   },
+  {
+    value: "Nuevo",
+    label: "Nuevo",
+    icon: CheckCircledIcon,
+  },
   // {
   //   value: "canceled",
   //   label: "Canceled",

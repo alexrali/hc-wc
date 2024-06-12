@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { listingSchema } from "../data/schema"
@@ -51,8 +51,9 @@ import {
 } from "lucide-react"
 
 async function fetchTasks(type: string) {
+
     let url = 'https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/listing';
-    if (type && type !== 'active') {
+    if (type !== '' && type !== 'default') {
         url += `?ean=${type}`;
     }
 
@@ -75,25 +76,23 @@ export function ProductDataTableTabs() {
 
     type ListingSchemaType = z.infer<typeof listingSchema>;
 
-    const [tasks, setTasks] = useState<Record<string, ListingSchemaType[]>>({});
-    const [selectedTab, setSelectedTab] = useState('active');
+    const [tasks, setTasks] = useState<ListingSchemaType[]>([]);
+    const [selectedTab, setSelectedTab] = useState<string>('default');
 
+    const prevSelectedTabRef = useRef<string>();
     useEffect(() => {
-        if (!tasks[selectedTab]) {
-            console.log(`Fetching tasks for tab: ${selectedTab}`);
-            fetchTasks(selectedTab).then((newTasks) => {
-                setTasks((prevTasks) => ({ ...prevTasks, [selectedTab]: newTasks }));
-            });
+        if (prevSelectedTabRef.current !== selectedTab) {
+            fetchTasks(selectedTab).then(setTasks);
         }
-    }, [selectedTab, tasks]);
-
+        prevSelectedTabRef.current = selectedTab;
+    }, [selectedTab]);
 
     return (
         <>
             <Tabs defaultValue="active">
                 <div className="flex items-center">
                     <TabsList>
-                        <TabsTrigger value="active" onClick={() => setSelectedTab('active')}>Activos</TabsTrigger>
+                        <TabsTrigger value="active" onClick={() => setSelectedTab('')}>Activos</TabsTrigger>
                         <TabsTrigger value="draft" onClick={() => setSelectedTab('Z')}>Inactivos</TabsTrigger>
                         <TabsTrigger value="archived" className="hidden sm:flex" onClick={() => setSelectedTab('ZZ')}>
                             Descatalogados
@@ -158,7 +157,8 @@ export function ProductDataTableTabs() {
                                                 <UserNav />
                                             </div> 
                                         </div> */}
-                                <DataTable data={tasks} columns={columns} />                                    </div>
+                                <DataTable data={tasks} columns={columns} />
+                            </div>
 
                         </CardContent>
                         {/* <CardFooter>
