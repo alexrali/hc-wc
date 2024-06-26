@@ -54,12 +54,11 @@ interface ProductRecentPurchasesProps {
 }
 export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
 
-  const [purchaseHistory, setPurchaseHistory] = useState<PurchaseHistory[]>([]);
-
   const { theme: mode } = useTheme()
   const [config] = useConfig()
-
   const theme = themes.find((theme) => theme.name === config.theme)
+
+  const [purchaseHistory, setPurchaseHistory] = useState<PurchaseHistory[]>([]);
 
   useEffect(() => {
     const fetchPurchaseHistory = async () => {
@@ -169,7 +168,7 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
                   return null;
                 }}
               />
-              <Line
+              {/* <Line
                 type="monotone"
                 strokeWidth={1}
                 dataKey="costo"
@@ -185,10 +184,10 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
                       })`,
                   } as React.CSSProperties
                 }
-              />
-              {/* <Line
+              /> */}
+              <Line
                 type="monotone"
-                dataKey="today"
+                dataKey="costo"
                 strokeWidth={2}
                 activeDot={{
                   r: 8,
@@ -201,7 +200,7 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
                       })`,
                   } as React.CSSProperties
                 }
-              /> */}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>

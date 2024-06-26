@@ -191,8 +191,9 @@ export function DataTableRowActions<TData>({
 
                       </CardContent>
                     </Card> */}
-                    {/* <ProductCardsActivityGoal /> */}
-                    <Card x-chunk="dashboard-07-chunk-5">
+                    <ProductCardsActivityGoal ean={task.clave}/> 
+
+                    {/* <Card x-chunk="dashboard-07-chunk-5">
                       <CardHeader>
                         <CardTitle>Archive Product</CardTitle>
                         <CardDescription>
@@ -202,7 +203,7 @@ export function DataTableRowActions<TData>({
                       <CardContent>
 
                       </CardContent>
-                    </Card>
+                    </Card> */}
                   </div>
                 </div>
                 {/* <div className="flex items-center justify-center gap-2 md:hidden">
