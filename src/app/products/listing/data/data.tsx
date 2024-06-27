@@ -147,10 +147,6 @@ export const priorities = [
 
 
 // label=["bug","feature","documentation"]
-
-
 // status=["backlog","todo","in progress","done","canceled"]
-
-
 // priority=["low","medium","high"]
 

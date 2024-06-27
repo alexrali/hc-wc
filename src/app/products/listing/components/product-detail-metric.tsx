@@ -19,6 +19,7 @@ import { Bar, BarChart, XAxis, YAxis } from "recharts"
 import { themes } from "@/themes"
 import getProductDrain from "@/app/actions/getProductDrain";
 import { ProductDrain } from "@/app/models/ProductDrain";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // const data = [
 //   { name: "Jan", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
@@ -57,6 +58,7 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
 
   const [productData, setProductData] = useState<ProductDrain[]>([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,9 +68,9 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
             console.error('Payload should not be a string');
           } else {
             if (Array.isArray(action.payload)) {
-              setProductData(action.payload); // Directly set the array
+              setProductData(action.payload);
             } else {
-              setProductData([action.payload]); // Wrap the single object in an array
+              setProductData([action.payload]);
             }
           }
         } else {
@@ -76,11 +78,13 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
         }
       } catch (error) {
         console.error('Error fetching product drain:', error);
+      } finally {
       }
     };
 
     fetchData();
-  }, [ean]); // Dependency array to re-fetch data if 'ean' changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
 
@@ -93,7 +97,7 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
 
 
 
-         <ResponsiveContainer width="100%" height={250}>
+        <ResponsiveContainer width="100%" height={250}>
 
           <BarChart data={productData} barGap={4} barSize={40} >
             <XAxis
@@ -149,7 +153,7 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
             />
 
           </BarChart>
-        </ResponsiveContainer> 
+        </ResponsiveContainer>
 
       </CardContent>
     </Card>

@@ -103,7 +103,7 @@ export const columns: ColumnDef<Listing>[] = [
   },
 
   {
-    accessorKey: "status",
+    accessorKey: "estatus",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Estado" />
     ),
@@ -130,7 +130,7 @@ export const columns: ColumnDef<Listing>[] = [
     },
   },
   {
-    accessorKey: "priority",
+    accessorKey: "prioridad",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prioridad" />
     ),

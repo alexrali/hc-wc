@@ -20,6 +20,7 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowDownIcon, ArrowUpIcon, UserRoundIcon, UsersRoundIcon, StoreIcon, ExpandIcon } from "lucide-react"
 
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { Skeleton } from "@/components/ui/skeleton"
 
 
 const data = [
@@ -61,9 +62,6 @@ interface ProductCardsStatsProps {
     ean: string;
 }
 
-
-
-
 export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
     const { theme: mode } = useTheme()
     const [config] = useConfig()
@@ -73,22 +71,32 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
     const [productDetail, setProductDetail] = useState<ProductCommercialDetail | null>(null);
 
     useEffect(() => {
+        let isMounted = true; // Flag to track the mounted state of the component
+
         const fetchProductDetail = async () => {
+            if (!isMounted) return; // Prevent updating state if the component is unmounted
+
             const action = await getProductDetail(ean);
-            if (action.type === 'GET_PRODUCT_DETAIL_SUCCESS' && action.payload) {
-                if (typeof action.payload === 'string') {
-                    console.error('Payload should not be a string');
+            if (action.type === 'GET_PRODUCT_DETAIL_SUCCESS') {
+                if (typeof action.payload === 'object' && action.payload !== null) {
+                    if (isMounted) setProductDetail(action.payload);
                 } else {
-                    setProductDetail(action.payload);
+                    console.error('Payload is not of type ProductCommercialDetail', action.payload);
+                    if (isMounted) setProductDetail(null);
                 }
             } else {
-                console.error('Failed to fetch product detail')
+                console.error('Failed to fetch product detail');
+                if (isMounted) setProductDetail(null);
             }
         };
 
         fetchProductDetail();
-    }, [ean]);
 
+        return () => {
+            isMounted = false; // Set the flag to false when the component unmounts
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Empty dependency array to run the effect only once on component mount
 
     let data = [
         {
@@ -110,11 +118,11 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
         <Card className="w-full max-w-4xl">
             <CardHeader>
                 <CardTitle>Indicadores Clave</CardTitle>
-                {/* <CardDescription>A summary of our most important business metrics.</CardDescription> */}
             </CardHeader>
             <CardContent className="grid grid-cols-6 grid-rows-2 gap-4">
+
                 <div className="col-span-2 row-span-2 p-4 bg-card rounded-lg shadow-sm">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width={220} height={180}>
                         <PieChart>
                             <Pie
                                 data={data}
@@ -158,58 +166,6 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-
-                {/* <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div className="text-xs font-medium text-muted-foreground">Clientes</div>
-                        <div className="flex items-center gap-1">
-
-                        </div>
-                    </div>
-                    <div className="text-3xl font-bold tracking-tighter mt-2 text-right">{productDetail?.c_dist}</div>
-                </div> */}
-
-
-                {/* <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div className="text-xs font-medium text-muted-foreground">Sucursales</div>
-                        <div className="flex items-center gap-1">
-
-                        </div>
-                    </div>
-                    <div className="text-3xl font-bold tracking-tighter mt-2 text-right">{productDetail?.c_auto}</div>
-                </div> */}
-                {/* 
-                <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div className="text-xs font-medium text-muted-foreground">Demanda Promedio</div>
-                        <div className="flex items-center gap-1">
-                            <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                        <span className="text-sm font-medium text-green-500">+8.2%</span>
-                        </div>
-                    </div>
-                    <div className="text-3xl font-bold tracking-tighter mt-2 text-right">
-                        {productDetail?.avg_demand}
-                    </div>
-                </div> */}
-
-                {/* <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div className="text-xs font-medium text-muted-foreground">Var. de la Demanda</div>
-                        <div className="flex items-center gap-1">
-                            <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                        <span className="text-sm font-medium text-green-500">+8.2%</span>
-                        </div>
-                    </div>
-                    <div className="text-3xl font-bold tracking-tighter mt-2 text-right">
-                        {productDetail?.std_demand}
-                    </div>
-                </div> */}
-
-
-
-
-                {/* <div className="col-span-2 row-span-2 p-4 bg-card rounded-lg shadow-sm"> */}
 
                 <div className="p-4 col-span-2 row-span-2 bg-card rounded-lg shadow-sm">
 
@@ -256,18 +212,6 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
 
                 </div>
 
-                {/* <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div className="text-xs font-medium text-muted-foreground">Fecha de Alta</div>
-                        <div className="flex items-center gap-1">
-                            <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                        <span className="text-sm font-medium text-green-500">+8.2%</span>
-                        </div>
-                    </div>
-                    <div className="text-3xl font-bold tracking-tighter mt-2 text-right">
-                        {productDetail?.f_alta ? new Date(productDetail.f_alta).toLocaleDateString() : ''}
-                    </div>
-                </div> */}
                 <div className="p-4 bg-card rounded-lg shadow-sm">
                     <div className="flex items-center justify-between">
                         <div className="text-xs font-medium text-muted-foreground">MTD</div>
@@ -280,7 +224,6 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
                         {`${((productDetail?.percent_mtd ?? 0) * 100).toFixed(1)}%`}
                     </div>
                 </div>
-
 
                 <div className="p-4 bg-card rounded-lg shadow-sm">
                     <div className="flex items-center justify-between">
@@ -303,7 +246,6 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
             </div> */}
                     </div>
                 </div>
-
 
             </CardContent>
         </Card>

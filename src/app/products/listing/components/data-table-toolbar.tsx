@@ -30,16 +30,16 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
+        {table.getColumn("estatus") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Estado"
             options={statuses}
           />
         )}
-        {table.getColumn("priority") && (
+        {table.getColumn("prioridad") && (
           <DataTableFacetedFilter
-            column={table.getColumn("priority")}
+            column={table.getColumn("prioridad")}
             title="Prioridad"
             options={priorities}
           />
