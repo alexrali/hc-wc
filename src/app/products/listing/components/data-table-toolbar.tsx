@@ -32,7 +32,7 @@ export function DataTableToolbar<TData>({
         />
         {table.getColumn("estatus") && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
+            column={table.getColumn("estatus")}
             title="Estado"
             options={statuses}
           />

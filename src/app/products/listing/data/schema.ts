@@ -24,9 +24,9 @@ export const listingSchema = z.object({
   costo_promedio: z.number(),
   P3: z.number(),
   UT: z.string().optional(),
-  status: z.string(), //status
+  estatus: z.string(), //status
   label: z.string(), 
-  priority: z.string(), //priority
+  prioridad: z.string(), //priority
   linea: z.string().optional(),
   proveedor: z.string().optional(), 
   comprador: z.string().optional()

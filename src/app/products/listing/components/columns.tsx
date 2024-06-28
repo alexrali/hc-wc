@@ -109,7 +109,7 @@ export const columns: ColumnDef<Listing>[] = [
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("status")
+        (status) => status.value === row.getValue("estatus")
       )
 
       if (!status) {
@@ -135,8 +135,9 @@ export const columns: ColumnDef<Listing>[] = [
       <DataTableColumnHeader column={column} title="Prioridad" />
     ),
     cell: ({ row }) => {
+
       const priority = priorities.find(
-        (priority) => priority.value === row.getValue("priority")
+        (priority) => priority.value === row.getValue("prioridad")
       )
 
       if (!priority) {
