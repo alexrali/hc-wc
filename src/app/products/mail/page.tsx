@@ -1,26 +1,27 @@
 import { cookies } from "next/headers"
 import Image from "next/image"
 
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { Mail } from "@/app/products/mail/components/mail"
 import { accounts, mails } from "@/app/products/mail/data"
 import { ContentLayout } from "@/components/admin-panel/content-layout"
 import getProviders from "@/app/actions/getProviders"
-
 
 interface Account {
   label: string;
   email: string;
   icon: React.ReactNode;
 }
-
 async function fetchAndFormatAccounts(): Promise<Account[]> {
+  console.log("Request time:", new Date().toLocaleTimeString());
   const response = await getProviders();
   let formattedAccounts: Account[] = []; // Explicitly type formattedAccounts as an array of Account
 
+  console.log(response.payload.length);
   if (response.type === 'GET_PROVIDERS_SUCCESS' && Array.isArray(response.payload)) {
     formattedAccounts = response.payload.map(provider => ({
       label: provider.title, // Ensure this matches the actual provider object structure
-      email: provider.title, // Ensure this matches the actual provider object structure
+      email: provider.code, // Ensure this matches the actual provider object structure
       icon: (
         <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <title>Vercel</title>
@@ -61,8 +62,8 @@ export default async function MailPage() {
         />
       </div>
       <ContentLayout title="Lineas">
-        <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow w-[98%] mx-auto mt-4 mb-4">
-          <div className="hidden flex-col md:flex">
+        {/* <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow w-[98%] mx-auto mt-4 mb-4"> */}
+          <div className="hidden bg-background flex-col md:flex max-h-[1100px]">
             <Mail
               accounts={accounts}
               mails={mails}
@@ -71,7 +72,7 @@ export default async function MailPage() {
               navCollapsedSize={4}
             />
           </div>
-        </div>
+        {/* </div> */}
       </ContentLayout>
     </>
   )

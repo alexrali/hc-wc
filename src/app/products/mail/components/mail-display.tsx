@@ -48,6 +48,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Mail } from "@/app//products/mail/data"
+import { ProductCardsStats } from '../../listing/components/product-detail-stats';
+import { ProductCardsMetric } from '../../listing/components/product-detail-metric';
+import { ProductRecentPurchases } from '../../listing/components/product-detail-recent-purchases';
+import { ProductCardsActivityGoal } from '../../listing/components/product-detail-goal';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 interface MailDisplayProps {
   mail: Mail | null
@@ -194,6 +199,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </DropdownMenu>
       </div>
       <Separator />
+
+
       {mail ? (
         <div className="flex flex-1 flex-col">
           <div className="flex items-start p-4">
@@ -212,6 +219,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 <div className="line-clamp-1 text-xs">{mail.subject}</div>
                 <div className="line-clamp-1 text-xs">
                   <span className="font-medium">Reply-To:</span> {mail.email}
+
                 </div>
               </div>
             </div>
@@ -222,9 +230,37 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             )}
           </div>
           <Separator />
+
           <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-            {mail.text}
+            {/* {mail.text} */}
+
+            <ScrollArea className="flex flex-col h-[600px] overflow-auto">
+              <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                <div className="mx-auto grid max-w-[78rem] flex-1 auto-rows-max gap-4">
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
+                    {/* First row spanning 2 columns for ProductCardsStats */}
+                    <div className="md:col-span-2 lg:col-span-2">
+                      <ProductCardsStats ean={mail.id} />
+                    </div>
+                    {/* Second row spanning 2 columns for ProductCardsMetric */}
+                    <div className="md:col-span-2 lg:col-span-2">
+                      <ProductCardsMetric ean={mail.id} />
+                    </div>
+                    {/* Third row, first column for ProductRecentPurchases */}
+                    <div>
+                      <ProductRecentPurchases ean={mail.id} />
+                    </div>
+                    {/* Third row, second column for ProductCardsActivityGoal */}
+                    <div>
+                      <ProductCardsActivityGoal ean={mail.id} />
+                    </div>
+                  </div>
+                </div>
+              </main>
+            </ScrollArea>
           </div>
+
+
           <Separator className="mt-auto" />
           <div className="p-4">
             <form>

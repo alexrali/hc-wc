@@ -96,7 +96,7 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
             isMounted = false; // Set the flag to false when the component unmounts
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // Empty dependency array to run the effect only once on component mount
+    }, [ean]); // Empty dependency array to run the effect only once on component mount
 
     let data = [
         {

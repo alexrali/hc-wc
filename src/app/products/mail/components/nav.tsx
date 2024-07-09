@@ -1,6 +1,3 @@
-"use client"
-
-import Link from "next/link"
 import { LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -18,6 +15,7 @@ interface NavProps {
     label?: string
     icon: LucideIcon
     variant: "default" | "ghost"
+    onClick: (event: React.MouseEvent<HTMLButtonElement>, title: string) => void; // Adjusted for button element
   }[]
 }
 
@@ -32,8 +30,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
           isCollapsed ? (
             <Tooltip key={index} delayDuration={0}>
               <TooltipTrigger asChild>
-                <Link
-                  href="#"
+                <button
+                  onClick={(event) => link.onClick(event, link.title)} // Use the onClick handler
                   className={cn(
                     buttonVariants({ variant: link.variant, size: "icon" }),
                     "h-9 w-9",
@@ -43,7 +41,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 >
                   <link.icon className="h-4 w-4" />
                   <span className="sr-only">{link.title}</span>
-                </Link>
+                </button>
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-4">
                 {link.title}
@@ -55,9 +53,9 @@ export function Nav({ links, isCollapsed }: NavProps) {
               </TooltipContent>
             </Tooltip>
           ) : (
-            <Link
+            <button
               key={index}
-              href="#"
+              onClick={(event) => link.onClick(event, link.title)} // Use the onClick handler
               className={cn(
                 buttonVariants({ variant: link.variant, size: "sm" }),
                 link.variant === "default" &&
@@ -78,7 +76,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                   {link.label}
                 </span>
               )}
-            </Link>
+            </button>
           )
         )}
       </nav>

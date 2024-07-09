@@ -9,11 +9,14 @@ interface GetProvidersAction {
 
 const getProviders = async (): Promise<GetProvidersAction> => {
     try {
-        const response = await axios.get('https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/providers', {
+        const axiosConfig = {
             headers: {
                 'ngrok-skip-browser-warning': 'any value'
             },
-        });
+            timeout: 5000, // Timeout after 5000 milliseconds (5 seconds)
+        };
+
+        const response = await axios.get('https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/providers', axiosConfig);
 
         //console.log('getProviders response', response.data);
 
@@ -23,7 +26,14 @@ const getProviders = async (): Promise<GetProvidersAction> => {
         };
     } catch (error) {
         let errorMessage = 'An error occurred';
-        if (error instanceof Error) {
+        if (axios.isAxiosError(error)) {
+            // Check if the error is an AxiosError
+            errorMessage = error.message;
+            if (error.code === 'ECONNABORTED') {
+                errorMessage = 'Request timed out';
+            }
+        } else if (error instanceof Error) {
+            // Handle non-Axios errors
             errorMessage = error.message;
         }
         return {
