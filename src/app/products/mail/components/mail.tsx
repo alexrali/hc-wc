@@ -161,6 +161,7 @@ export function Mail({
           )}`
         }}
         className="h-full items-stretch"
+        style={{ maxHeight: '91vh' }}
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -176,7 +177,7 @@ export function Mail({
           }) as unknown as PanelOnCollapse}
           className={cn(
             isCollapsed &&
-            "min-w-[40px] transition-all duration-300 ease-in-out"
+            "min-w-[50px] transition-all duration-300 ease-in-out"
           )}
         >
           <div
@@ -193,7 +194,7 @@ export function Mail({
             />
           </div>
           <Separator />
-          <ScrollArea className="flex flex-col h-[550px] overflow-auto">
+          <ScrollArea className="flex flex-col h-[560px] overflow-auto">
             {/* 
             <div>
               <span>
@@ -295,8 +296,7 @@ export function Mail({
           /> */}
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={20} maxSize={30}>
 
           <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <form>

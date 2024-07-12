@@ -16,7 +16,7 @@ const getProviders = async (): Promise<GetProvidersAction> => {
             timeout: 5000, // Timeout after 5000 milliseconds (5 seconds)
         };
 
-        const response = await axios.get('https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/providers', axiosConfig);
+        const response = await axios.get('https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/providers', axiosConfig);
 
         //console.log('getProviders response', response.data);
 

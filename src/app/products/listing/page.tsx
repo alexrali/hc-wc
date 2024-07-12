@@ -78,7 +78,7 @@ import { ProductDataTableTabs } from "./components/tabs-products-data-table"
 import { ContentLayout } from "@/components/admin-panel/content-layout"
 
 // async function getTasks() {
-//     const response = await fetch('https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/listing', {
+//     const response = await fetch('https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/listing', {
 //         method: 'GET',
 //         headers: {
 //           'ngrok-skip-browser-warning': 'any value',

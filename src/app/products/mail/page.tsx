@@ -17,6 +17,7 @@ async function fetchAndFormatAccounts(): Promise<Account[]> {
   const response = await getProviders();
   let formattedAccounts: Account[] = []; // Explicitly type formattedAccounts as an array of Account
 
+  // console.log(response);
   console.log(response.payload.length);
   if (response.type === 'GET_PROVIDERS_SUCCESS' && Array.isArray(response.payload)) {
     formattedAccounts = response.payload.map(provider => ({
@@ -62,17 +63,16 @@ export default async function MailPage() {
         />
       </div>
       <ContentLayout title="Lineas">
-        {/* <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow w-[98%] mx-auto mt-4 mb-4"> */}
-          <div className="hidden bg-background flex-col md:flex max-h-[1100px]">
-            <Mail
-              accounts={accounts}
-              mails={mails}
-              defaultLayout={defaultLayout}
-              defaultCollapsed={defaultCollapsed}
-              navCollapsedSize={4}
-            />
-          </div>
-        {/* </div> */}
+        <div className="hidden flex-col md:flex">
+          <Mail
+            accounts={accounts}
+            mails={mails}
+            defaultLayout={defaultLayout}
+            defaultCollapsed={defaultCollapsed}
+            navCollapsedSize={4}
+          />
+        </div>
+
       </ContentLayout>
     </>
   )

@@ -11,7 +11,7 @@ const getProductDrain = async (ean: string): Promise<GetProductDrainAction> => {
     console.log('getProductDrain called with', { ean });
 
     try {
-        const response = await axios.get(`https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/drain/${ean}`, {
+        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/drain/${ean}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'any value'
             },

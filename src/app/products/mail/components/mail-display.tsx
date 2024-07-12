@@ -236,7 +236,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
             <ScrollArea className="flex flex-col h-[600px] overflow-auto">
               <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-                <div className="mx-auto grid max-w-[78rem] flex-1 auto-rows-max gap-4">
+                <div className="mx-auto grid w-full flex-1 auto-rows-max gap-4">
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
                     {/* First row spanning 2 columns for ProductCardsStats */}
                     <div className="md:col-span-2 lg:col-span-2">
@@ -262,8 +262,10 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
 
           <Separator className="mt-auto" />
-          <div className="p-4">
-            <form>
+
+           <div className="p-4">
+
+            {/* <form>
               <div className="grid gap-4">
                 <Textarea
                   className="p-4"
@@ -286,12 +288,14 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                   </Button>
                 </div>
               </div>
-            </form>
-          </div>
+            </form> */}
+
+          </div> 
+
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
-          No message selected
+         Sin selección
         </div>
       )}
     </div>

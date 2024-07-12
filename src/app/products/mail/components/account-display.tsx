@@ -53,6 +53,13 @@ import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { CategoryBalance } from './category-balance';
 import { CategoryDescriptor } from './category-descriptor';
 import { CategoryPerformance } from './category-performance';
+import { CategoryShare } from './category-share';
+import { CategoryTarget } from './category-target';
+import { CategoryGoal } from './category-goal';
+import { CategoryObjective } from './category-objective';
+import { CategoryChannel } from './category-channel';
+import { CategoryTrend } from './category-trend';
+import { CategoryElements } from './category-elements';
 
 interface AccountDisplayProps {
     account: string | null
@@ -211,25 +218,45 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
                 <Separator />
 
                 <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-                    <ScrollArea className="flex flex-col h-[800px] overflow-auto">
-                        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-                            <div className="mx-auto grid max-w-[86rem] flex-1 auto-rows-max gap-4">
-                                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
-                                    {/* First row spanning 2 columns for ProductCardsStats */}
-                                    <div className="md:col-span-2 lg:col-span-2">
-                                        <CategoryPerformance />
+                    <ScrollArea className="flex flex-col h-[900px] overflow-auto">
+                        <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-8">
+                            <div className="mx-auto grid w-full flex-1 auto-rows-max gap-2">
+                                <div className="grid gap-2 md:grid-cols-8 lg:grid-cols-8">
+                                    {/* Component 1: CategoryShare spans 4 columns and 2 rows */}
+                                    <div className="md:col-span-4 lg:col-span-4 md:row-span-3 lg:row-span-2">
+                                        <CategoryShare />
+                                        <div className="flex mt-2 gap-2">
+                                            <div className="w-1/2">
+                                                <CategoryChannel />
+                                            </div>
+                                            <div className="w-1/2">
+                                                <CategoryTrend />
+                                            </div>
+                                        </div>
                                     </div>
-                                    {/* Second row spanning 2 columns for ProductCardsMetric */}
-                                    <div className="md:col-span-2 lg:col-span-2">
-
+                                    {/* Component 2: CategoryTarget on the first row next to CategoryShare, spanning 2 columns */}
+                                    <div className="md:col-span-2 lg:col-span-2 md:row-span-1 lg:row-span-1">
+                                        <CategoryDescriptor />
                                     </div>
-                                    {/* Third row, first column for ProductRecentPurchases */}
-                                    <div>
+                                    {/* Component 3: CategoryDescriptor on the first row next to CategoryTarget, spanning 2 columns */}
+                                    <div className="md:col-span-2 lg:col-span-2 md:row-span-1 lg:row-span-1">
+                                        <CategoryElements />
+                                    </div>
+                                    {/* Repeat of Component 2: CategoryTarget on the second row below the first instance, spanning 2 columns */}
+                                    <div className="md:col-span-2 lg:col-span-2 md:row-span-1 lg:row-span-1">
+                                        <CategoryGoal />
+                                    </div>
+                                    {/* Repeat of Component 3: CategoryDescriptor on the second row next to the repeated CategoryTarget, spanning 2 columns */}
+                                    <div className="md:col-span-2 lg:col-span-2 md:row-span-1 lg:row-span-1">
+                                        <CategoryObjective />
+                                    </div>
+                                    {/* Component 4: CategoryBalance on the third row, spanning 2 columns */}
+                                    <div className="md:col-span-2 lg:col-span-2 md:row-span-1 lg:row-span-1">
                                         <CategoryBalance />
                                     </div>
-                                    {/* Third row, second column for ProductCardsActivityGoal */}
-                                    <div>
-                                        <CategoryDescriptor />
+                                    {/* Component 5: CategoryPerformance on the third row next to CategoryBalance, spanning 6 columns */}
+                                    <div className="md:col-span-6 lg:col-span-6 md:row-span-1 lg:row-span-1">
+                                        <CategoryPerformance />
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +266,7 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
 
 
                 <Separator className="mt-auto" />
-                <div className="p-4">
+                {/* <div className="p-4">
                     <form>
                         <div className="grid gap-4">
                             <Textarea
@@ -264,7 +291,7 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> */}
             </div>
 
         </div>

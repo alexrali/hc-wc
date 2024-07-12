@@ -17,7 +17,7 @@ const getAllProductsKardex = async (startDate: string, endDate: string): Promise
 
     try {
         // Update the URL and the parameters
-        const response = await axios.get(`https://84e4-187-140-114-155.ngrok-free.app/api/v1/products/all_products_kardex`, {
+        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/all_products_kardex`, {
             params: {
                 start_date: startDate,
                 end_date: endDate
