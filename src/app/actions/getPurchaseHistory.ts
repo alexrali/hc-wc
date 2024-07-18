@@ -10,7 +10,7 @@ const getLastPurchase = async (ean: string): Promise<GetLastPurchaseAction> => {
     console.log('getLastPurchase called with', { ean });
 
     try {
-        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/last-purchase/${ean}`, {
+        const response = await axios.get(`https://lxs.ngrok.app/api/v1/products/last-purchase/${ean}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'any value'
             },

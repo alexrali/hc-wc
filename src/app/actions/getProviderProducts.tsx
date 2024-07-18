@@ -10,7 +10,7 @@ interface GetProviderProductsAction {
 // Define the action creator function
 const getProviderProducts = async (provider_code?: string, category_code?: string): Promise<GetProviderProductsAction> => {
     try {
-        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/products_by_provider`, {
+        const response = await axios.get(`https://lxs.ngrok.app/api/v1/products/products_by_provider`, {
             params: {
                 provider_code: provider_code,
                 category_code: category_code

@@ -24,10 +24,7 @@ async function fetchAndFormatAccounts(): Promise<Account[]> {
       label: provider.title, // Ensure this matches the actual provider object structure
       email: provider.code, // Ensure this matches the actual provider object structure
       icon: (
-        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <title>Vercel</title>
-          <path d="M24 22.525H0l12-21.05 12 21.05z" fill="currentColor" />
-        </svg>
+        <svg fill="#000000" width="89px" height="89px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M128 209c-44.735 0-81-36.265-81-81s36.265-81 81-81 81 36.265 81 81-36.265 81-81 81zm.5-33c26.51 0 48-21.49 48-48s-21.49-48-48-48-48 21.49-48 48 21.49 48 48 48z" fill-rule="evenodd"></path> </g></svg>
       ),
     }));
   }
@@ -66,7 +63,7 @@ export default async function MailPage() {
         <div className="hidden flex-col md:flex">
           <Mail
             accounts={accounts}
-            mails={mails}
+            //mails={mails}
             defaultLayout={defaultLayout}
             defaultCollapsed={defaultCollapsed}
             navCollapsedSize={4}

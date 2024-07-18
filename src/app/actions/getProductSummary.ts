@@ -11,7 +11,7 @@ const getProductSummary = async (ean: string, startDate: string, endDate: string
     console.log('getProductSummary called with', { ean, startDate, endDate });
 
     try {
-        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/${ean}/summary`, {
+        const response = await axios.get(`https://lxs.ngrok.app/api/v1/products/${ean}/summary`, {
             params: {
                 start_date: startDate,
                 end_date: endDate

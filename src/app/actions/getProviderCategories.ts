@@ -8,7 +8,7 @@ interface GetProviderCategoriesAction {
 
 const getProviderCategories = async (code?: string): Promise<GetProviderCategoriesAction> => {
     try {
-        let url = 'https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/provider-categories';
+        let url = 'https://lxs.ngrok.app/api/v1/products/provider-categories';
         if (code) {
             url += `/${code}`;
         }

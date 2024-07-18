@@ -6,7 +6,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import getLastPurchase from '@/app/actions/getPurchaseHistory';
 import { PurchaseHistory } from '@/app/models/PurchaseHistory';
@@ -15,39 +15,21 @@ import { useConfig } from '@/hooks/use-config';
 import { themes } from '@/themes';
 import { useTheme } from 'next-themes';
 
-import { Line, LineChart, Tooltip, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Line, LineChart, Tooltip, ResponsiveContainer, XAxis, YAxis, CartesianGrid } from 'recharts';
 
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
-const data = [
-  {
-    average: 400,
-    today: 240,
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "hsl(var(--chart-1))",
   },
-  {
-    average: 300,
-    today: 139,
-  },
-  {
-    average: 200,
-    today: 980,
-  },
-  {
-    average: 278,
-    today: 390,
-  },
-  {
-    average: 189,
-    today: 480,
-  },
-  {
-    average: 239,
-    today: 380,
-  },
-  {
-    average: 349,
-    today: 430,
-  },
-]
+} satisfies ChartConfig
 
 interface ProductRecentPurchasesProps {
   ean: string;
@@ -76,12 +58,19 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
 
   return (
 
-    <Card >
-      <CardHeader>
-        <CardTitle>Compras Recientes</CardTitle>
+    <Card className="flex flex-col">
+      <CardHeader className="items-left pb-0">
+        <CardTitle>
+          Compras Recientes
+        </CardTitle>
+        <CardDescription>
+          <span className="text-[0.70rem]">
+            Costo de las adquisiciones más recientes
+          </span>
+        </CardDescription>
       </CardHeader>
       <CardContent >
-
+        {/* 
         <div className="h-[150px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -134,57 +123,33 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
 
                     return (
                       <div className="rounded-lg border bg-background p-2 shadow-sm">
-                      <div className="grid grid-cols-1 gap-2">
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] text-muted-foreground">
-                            Fecha
-                          </span>
-                          <span className="font-bold">
-                            {formattedFecha}
-                          </span>
+                        <div className="grid grid-cols-1 gap-2">
+                          <div className="flex flex-col">
+                            <span className="text-[0.70rem] text-muted-foreground">
+                              Fecha
+                            </span>
+                            <span className="font-bold">
+                              {formattedFecha}
+                            </span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[0.70rem] text-muted-foreground">
+                              Costo
+                            </span>
+                            <span className="font-bold text-muted-foreground">
+                              {payload[0].value?.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) ?? 'N/A'}
+                            </span>
+                          </div>
+
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] text-muted-foreground">
-                            Costo
-                          </span>
-                          <span className="font-bold text-muted-foreground">
-                            {payload[0].value?.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) ?? 'N/A'}
-                          </span>
-                        </div>
-                        {/* Uncomment and adjust if needed for displaying nombre */}
-                        {/* <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-muted-foreground">
-                            Nombre
-                          </span>
-                          <span className="font-bold">
-                            {payload[0].payload.nombre}
-                          </span>
-                        </div> */}
                       </div>
-                    </div>
                     );
                   }
 
                   return null;
                 }}
               />
-              {/* <Line
-                type="monotone"
-                strokeWidth={1}
-                dataKey="costo"
-                activeDot={{
-                  r: 8,
-                  style: { fill: "var(--theme-primary)", opacity: 0.25 },
-                }}
-                style={
-                  {
-                    stroke: "var(--theme-primary)",
-                    opacity: 0.25,
-                    "--theme-primary": `hsl(${theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-                      })`,
-                  } as React.CSSProperties
-                }
-              /> */}
+
               <Line
                 type="monotone"
                 dataKey="costo"
@@ -203,15 +168,66 @@ export function ProductRecentPurchases({ ean }: ProductRecentPurchasesProps) {
               />
             </LineChart>
           </ResponsiveContainer>
-        </div>
+        </div> */}
+
+        <ChartContainer 
+          config={chartConfig}
+          className="mx-auto max-h-[150px]"
+          >
+          <LineChart
+            accessibilityLayer
+            data={[...purchaseHistory].reverse()}
+            margin={{
+              top: 0,
+              right: 10,
+              left: -50,
+              bottom: 0,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="fecha"
+              tickMargin={8}
+              fontSize={9}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => {
+                const date = new Date(value);
+                return date.toLocaleDateString('es-MX', {
+                  month: 'short', // "Jun"
+                  year: '2-digit' // "21"
+                });
+              }}
+            />
+
+            <YAxis
+              tick={false}
+              tickLine={false}
+              axisLine={false}
+              domain={['dataMin - 100', 'dataMax + 100']}
+            />
+
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Line
+              dataKey="costo"
+              type="natural"
+              stroke="var(--color-desktop)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ChartContainer>
 
         <ScrollArea className="h-36 mt-10">
           <div className="w-full max-w-2xl mx-auto ">
             <div className="grid gap-4 text-xs">
               {purchaseHistory.map((purchase) => (
-                <div className="grid grid-cols-[1fr_auto] items-center gap-4" key={purchase.folio}>
+                <div className="grid grid-cols-[1fr_auto] items-center gap-2 text-[0.70rem]" key={purchase.folio}>
                   <div className="grid gap-1">
-                    <h3 className="font-bold">{purchase.nombre}</h3>
+                    <h3 className="font-bold ">{purchase.nombre}</h3>
                     <p className="text-gray-500 dark:text-gray-400">{purchase.folio}</p>
                     {/* <p className="text-gray-500 dark:text-gray-400">{new Date(purchase.fecha).toLocaleDateString()}</p> */}
                   </div>

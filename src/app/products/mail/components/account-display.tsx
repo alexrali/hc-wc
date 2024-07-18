@@ -219,9 +219,9 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
 
                 <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
                     <ScrollArea className="flex flex-col h-[900px] overflow-auto">
-                        <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-8">
-                            <div className="mx-auto grid w-full flex-1 auto-rows-max gap-2">
-                                <div className="grid gap-2 md:grid-cols-8 lg:grid-cols-8">
+                        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                            <div className="mx-auto grid w-full flex-1 auto-rows-max gap-4">
+                                <div className="grid gap-4 md:grid-cols-8 lg:grid-cols-8">
                                     {/* Component 1: CategoryShare spans 4 columns and 2 rows */}
                                     <div className="md:col-span-4 lg:col-span-4 md:row-span-3 lg:row-span-2">
                                         <CategoryShare />

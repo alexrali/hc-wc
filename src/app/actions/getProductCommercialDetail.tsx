@@ -10,7 +10,7 @@ const getProductDetail = async (ean: string): Promise<GetProductDetailAction> =>
     console.log('getProductDetail called with', { ean });
 
     try {
-        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/product-detail/${ean}`, {
+        const response = await axios.get(`https://lxs.ngrok.app/api/v1/products/product-detail/${ean}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'any value'
             },

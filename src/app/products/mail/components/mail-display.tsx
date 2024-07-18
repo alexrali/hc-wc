@@ -33,7 +33,6 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
@@ -47,12 +46,30 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+
+import { Bar, BarChart, Label, LabelList, Rectangle, ReferenceLine, XAxis, YAxis } from "recharts"
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components//ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components//ui/chart"
+
+
 import { Mail } from "@/app//products/mail/data"
 import { ProductCardsStats } from '../../listing/components/product-detail-stats';
 import { ProductCardsMetric } from '../../listing/components/product-detail-metric';
 import { ProductRecentPurchases } from '../../listing/components/product-detail-recent-purchases';
 import { ProductCardsActivityGoal } from '../../listing/components/product-detail-goal';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { ProductCardChannelBalance } from '../../listing/components/product-detail-channel-balance';
+import { ProductSales } from '../../listing/components/product-detail-sales';
+import { ProductCardsStockHistory } from '../../listing/components/product-detail-stock-history';
 
 interface MailDisplayProps {
   mail: Mail | null
@@ -63,8 +80,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center p-2">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center p-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex items-center gap-2 ">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" disabled={!mail}>
@@ -203,7 +220,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
       {mail ? (
         <div className="flex flex-1 flex-col">
-          <div className="flex items-start p-4">
+          <div className="flex items-start p-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex items-start gap-4 text-sm">
               <Avatar>
                 <AvatarImage alt={mail.name} />
@@ -231,39 +248,315 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           </div>
           <Separator />
 
-          <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-            {/* {mail.text} */}
+          {/* <div className="whitespace-pre-wrap chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-4 p-4 sm:flex-row sm:p-4"> */}
+          {/* {mail.text} */}
 
-            <ScrollArea className="flex flex-col h-[600px] overflow-auto">
-              <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <ScrollArea className="h-[900px] overflow-auto">
+
+            {/* <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                 <div className="mx-auto grid w-full flex-1 auto-rows-max gap-4">
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
-                    {/* First row spanning 2 columns for ProductCardsStats */}
+                  <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-2 lg:gap-2">
                     <div className="md:col-span-2 lg:col-span-2">
                       <ProductCardsStats ean={mail.id} />
                     </div>
-                    {/* Second row spanning 2 columns for ProductCardsMetric */}
                     <div className="md:col-span-2 lg:col-span-2">
                       <ProductCardsMetric ean={mail.id} />
                     </div>
-                    {/* Third row, first column for ProductRecentPurchases */}
                     <div>
                       <ProductRecentPurchases ean={mail.id} />
                     </div>
-                    {/* Third row, second column for ProductCardsActivityGoal */}
                     <div>
                       <ProductCardsActivityGoal ean={mail.id} />
                     </div>
                   </div>
                 </div>
-              </main>
-            </ScrollArea>
-          </div>
+              </main> */}
+
+            {/* <main className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
+                
+                <div className="col-span-8">
+                  <ProductCardsStats ean={mail.id} />
+                </div>
+                
+                <div className="col-span-5">
+                
+                  <ProductSales ean={mail.id} />   
+                </div>
+                
+                <div className="col-span-3">
+                  <ProductCardChannelBalance ean={mail.id} />
+                </div>
+                
+                <div className="col-span-6">
+                
+                  <ProductCardsStockHistory />
+                </div>
+                
+                <div className="col-span-2">
+                  <ProductRecentPurchases ean={mail.id} />
+                </div>
+              </main> */}
+
+            <main className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-6">
+              <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[24rem] lg:grid-cols-1 xl:max-w-[32rem]">
+                {/* <ProductSales ean={mail.id} />
+                <ProductCardsStockHistory /> */}
+                <Card className="lg:max-w-md">
+                  <CardHeader className="space-y-0 pb-2">
+                    <CardDescription>Today</CardDescription>
+                    <CardTitle className="text-4xl tabular-nums">
+                      12,584{" "}
+                      <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
+                        steps
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ChartContainer
+                      config={{
+                        steps: {
+                          label: "Steps",
+                          color: "hsl(var(--chart-1))",
+                        },
+                      }}
+                    >
+                      <BarChart
+                        accessibilityLayer
+                        margin={{
+                          left: -4,
+                          right: -4,
+                        }}
+                        data={[
+                          {
+                            date: "2024-01-01",
+                            steps: 2000,
+                          },
+                          {
+                            date: "2024-01-02",
+                            steps: 2100,
+                          },
+                          {
+                            date: "2024-01-03",
+                            steps: 2200,
+                          },
+                          {
+                            date: "2024-01-04",
+                            steps: 1300,
+                          },
+                          {
+                            date: "2024-01-05",
+                            steps: 1400,
+                          },
+                          {
+                            date: "2024-01-06",
+                            steps: 2500,
+                          },
+                          {
+                            date: "2024-01-07",
+                            steps: 1600,
+                          },
+                        ]}
+                      >
+                        <Bar
+                          dataKey="steps"
+                          fill="var(--color-steps)"
+                          radius={5}
+                          fillOpacity={0.6}
+                          activeBar={<Rectangle fillOpacity={0.8} />}
+                        />
+                        <XAxis
+                          dataKey="date"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={4}
+                          tickFormatter={(value) => {
+                            return new Date(value).toLocaleDateString("en-US", {
+                              weekday: "short",
+                            })
+                          }}
+                        />
+                        <ChartTooltip
+                          defaultIndex={2}
+                          content={
+                            <ChartTooltipContent
+                              hideIndicator
+                              labelFormatter={(value) => {
+                                return new Date(value).toLocaleDateString("en-US", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })
+                              }}
+                            />
+                          }
+                          cursor={false}
+                        />
+                        <ReferenceLine
+                          y={1200}
+                          stroke="hsl(var(--muted-foreground))"
+                          strokeDasharray="3 3"
+                          strokeWidth={1}
+                        >
+                          <Label
+                            position="insideBottomLeft"
+                            value="Average Steps"
+                            offset={10}
+                            fill="hsl(var(--foreground))"
+                          />
+                          <Label
+                            position="insideTopLeft"
+                            value="12,343"
+                            className="text-lg"
+                            fill="hsl(var(--foreground))"
+                            offset={10}
+                            startOffset={100}
+                          />
+                        </ReferenceLine>
+                      </BarChart>
+                    </ChartContainer>
+                  </CardContent>
+                  <CardFooter className="flex-col items-start gap-1">
+                    <CardDescription>
+                      Over the past 7 days, you have walked{" "}
+                      <span className="font-medium text-foreground">53,305</span> steps.
+                    </CardDescription>
+                    <CardDescription>
+                      You need <span className="font-medium text-foreground">12,584</span>{" "}
+                      more steps to reach your goal.
+                    </CardDescription>
+                  </CardFooter>
+                </Card>
+              </div>
+              <div className="grid w-full flex-1 gap-6 lg:max-w-[24rem]">
+
+                <Card className="max-w-xs">
+                  <CardHeader>
+                    <CardTitle>Progress</CardTitle>
+                    <CardDescription>
+                      average more steps a day this year than last year.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid gap-4">
+                    <div className="grid auto-rows-min gap-2">
+                      <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
+                        12,453
+                        <span className="text-sm font-normal text-muted-foreground">
+                          steps/day
+                        </span>
+                      </div>
+                      <ChartContainer
+                        config={{
+                          steps: {
+                            label: "Steps",
+                            color: "hsl(var(--chart-1))",
+                          },
+                        }}
+                        className="aspect-auto h-[32px] w-full"
+                      >
+                        <BarChart
+                          accessibilityLayer
+                          layout="vertical"
+                          margin={{
+                            left: 0,
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                          }}
+                          data={[
+                            {
+                              date: "2024",
+                              steps: 12435,
+                            },
+                          ]}
+                        >
+                          <Bar
+                            dataKey="steps"
+                            fill="var(--color-steps)"
+                            radius={4}
+                            barSize={32}
+                          >
+                            <LabelList
+                              position="insideLeft"
+                              dataKey="date"
+                              offset={8}
+                              fontSize={12}
+                              fill="white"
+                            />
+                          </Bar>
+                          <YAxis dataKey="date" type="category" tickCount={1} hide />
+                          <XAxis dataKey="steps" type="number" hide />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                    <div className="grid auto-rows-min gap-2">
+                      <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
+                        10,103
+                        <span className="text-sm font-normal text-muted-foreground">
+                          steps/day
+                        </span>
+                      </div>
+                      <ChartContainer
+                        config={{
+                          steps: {
+                            label: "Steps",
+                            color: "hsl(var(--muted))",
+                          },
+                        }}
+                        className="aspect-auto h-[32px] w-full"
+                      >
+                        <BarChart
+                          accessibilityLayer
+                          layout="vertical"
+                          margin={{
+                            left: 0,
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                          }}
+                          data={[
+                            {
+                              date: "2023",
+                              steps: 10103,
+                            },
+                          ]}
+                        >
+                          <Bar
+                            dataKey="steps"
+                            fill="var(--color-steps)"
+                            radius={4}
+                            barSize={32}
+                          >
+                            <LabelList
+                              position="insideLeft"
+                              dataKey="date"
+                              offset={8}
+                              fontSize={12}
+                              fill="hsl(var(--muted-foreground))"
+                            />
+                          </Bar>
+                          <YAxis dataKey="date" type="category" tickCount={1} hide />
+                          <XAxis dataKey="steps" type="number" hide />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* <ProductRecentPurchases ean={mail.id} />
+                <ProductCardChannelBalance ean={mail.id} /> */}
+              </div>
+              <div className="grid w-full flex-1 gap-6">
+                <ProductCardChannelBalance ean={mail.id} />
+              </div>
+            </main>
+
+          </ScrollArea>
+          {/* </div> */}
 
 
           <Separator className="mt-auto" />
 
-           <div className="p-4">
+          <div className="p-4">
 
             {/* <form>
               <div className="grid gap-4">
@@ -290,14 +583,30 @@ export function MailDisplay({ mail }: MailDisplayProps) {
               </div>
             </form> */}
 
-          </div> 
+          </div>
 
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
-         Sin selección
+          Sin selección
         </div>
       )}
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

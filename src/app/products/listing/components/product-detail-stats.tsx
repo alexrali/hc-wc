@@ -20,43 +20,40 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowDownIcon, ArrowUpIcon, UserRoundIcon, UsersRoundIcon, StoreIcon, ExpandIcon } from "lucide-react"
 
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
-import { Skeleton } from "@/components/ui/skeleton"
+
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart"
 
 
-const data = [
-    {
-        revenue: 10400,
-        subscription: 240,
+const chartConfig = {
+    // visitors: {
+    //   label: "Visitors",
+    // },
+    autoservicio: {
+        label: "a_pct",
+        color: "hsl(var(--chart-1))",
     },
-    {
-        revenue: 14405,
-        subscription: 300,
+    distribucion: {
+        label: "d_pct",
+        color: "hsl(var(--chart-2))",
     },
-    {
-        revenue: 9400,
-        subscription: 200,
-    },
-    {
-        revenue: 8200,
-        subscription: 278,
-    },
-    {
-        revenue: 7000,
-        subscription: 189,
-    },
-    {
-        revenue: 9600,
-        subscription: 239,
-    },
-    {
-        revenue: 11244,
-        subscription: 278,
-    },
-    {
-        revenue: 26475,
-        subscription: 189,
-    },
-]
+    // firefox: {
+    //   label: "Firefox",
+    //   color: "hsl(var(--chart-3))",
+    // },
+    // edge: {
+    //   label: "Edge",
+    //   color: "hsl(var(--chart-4))",
+    // },
+    // other: {
+    //   label: "Other",
+    //   color: "hsl(var(--chart-5))",
+    // },
+} satisfies ChartConfig
 
 interface ProductCardsStatsProps {
     ean: string;
@@ -100,18 +97,16 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
 
     let data = [
         {
-            name: 'Participación Distribucion',
+            name: 'Distribucion',
             value: (productDetail?.d_pct ?? 0) * 100,
-            fill: '#36A2EB',
+            fill: '#94a3b8',
         },
         {
-            name: 'Participación Sucursales',
+            name: 'Sucursales',
             value: (productDetail?.a_pct ?? 0) * 100,
-            fill: '#FFCE56',
+            fill: '#cbd5e1',
         },
     ];
-
-    const COLORS = ['#36A2EB', '#FFCE56'];
 
     return (
         // <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
@@ -122,7 +117,28 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
             <CardContent className="grid grid-cols-6 grid-rows-2 gap-4">
 
                 <div className="col-span-2 row-span-2 p-4 bg-card rounded-lg shadow-sm">
-                    <ResponsiveContainer width={220} height={180}>
+
+                    {/* <ChartContainer
+                        config={chartConfig}
+                        className="mx-auto aspect-square max-h-[250px]"
+                    >
+                        <PieChart>
+                            <ChartTooltip
+                                cursor={false}
+                                content={<ChartTooltipContent hideLabel />}
+                                
+                            />
+                            <Pie
+                                data={data}
+                                dataKey="value"
+                                nameKey="name"
+                                paddingAngle={2}
+                                innerRadius={60}
+                            />
+                        </PieChart>
+                    </ChartContainer> */}
+
+                    {/* <ResponsiveContainer width={220} height={180}>
                         <PieChart>
                             <Pie
                                 data={data}
@@ -165,6 +181,7 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
 
                         </PieChart>
                     </ResponsiveContainer>
+                     */}
                 </div>
 
                 <div className="p-4 col-span-2 row-span-2 bg-card rounded-lg shadow-sm">

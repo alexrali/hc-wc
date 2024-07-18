@@ -186,7 +186,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
             //     setIsLoading(true);
 
             //     // Construct the URL with the start and end dates
-            //     const url = `https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
+            //     const url = `https://lxs.ngrok.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
 
             //     // Fetch the file
             //     fetch(url, {
@@ -397,7 +397,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                                     setIsProgressLoading(true);
 
                                     // Construct the URL with the start and end dates
-                                    const url = `https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
+                                    const url = `https://lxs.ngrok.app/api/v1/products/all_products_kardex?start_date=${startDate}&end_date=${endDate}`;
 
                                     // Fetch the file
                                     axios.get(url, {

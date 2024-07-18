@@ -9,10 +9,13 @@ import {
   Inbox,
   MessagesSquare,
   Search,
+  Flame,
   Send,
   ShoppingCart,
   Trash2,
   Users2,
+  Gem,
+  TriangleAlert,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -35,7 +38,7 @@ import { AccountSwitcher } from "@/app//products/mail/components/account-switche
 import { MailDisplay } from "@/app//products/mail/components/mail-display"
 import { MailList } from "@/app//products/mail/components/mail-list"
 import { Nav } from "@/app//products/mail/components/nav"
-import { type Mail } from "@/app/products/mail/data"
+// import { type Mail } from "@/app/products/mail/data"
 import { useMail } from "@/app//products/mail/use-mail"
 import { PanelOnCollapse } from "react-resizable-panels"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
@@ -47,13 +50,51 @@ import { set } from "lodash"
 import { AccountDisplay } from "./account-display"
 
 
+
+// clave: z.string(),
+// descripcion: z.string(),
+// presentacion: z.string(),
+// ultima_venta: z.string(), // date as string, you might want to parse it later
+// ultima_compra: z.string(), // date as string, you might want to parse it later
+// existencia: z.number(),
+// ultimo_costo: z.number(),
+// costo_promedio: z.number(),
+// P3: z.number(),
+// UT: z.string().optional(),
+// estatus: z.string(), //status
+// label: z.string(), 
+// prioridad: z.string(), //priority
+// linea: z.string().optional(),
+// proveedor: z.string().optional(), 
+// comprador: z.string().optional()
+
+interface Mail {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  text: string;
+  date: string;
+  read: boolean;
+  labels: string[];
+
+  existencia: number;
+  ultimo_costo: number;
+  costo_promedio: number;
+  P3: number;
+  estatus: string;
+  label: string;
+  prioridad: string;
+  comprador: string;
+}
+
 interface MailProps {
   accounts: {
     label: string
     email: string
     icon: React.ReactNode
   }[]
-  mails: Mail[]
+  //mails: Mail[]
   defaultLayout: number[] | undefined
   defaultCollapsed?: boolean
   navCollapsedSize: number
@@ -66,6 +107,7 @@ export function Mail({
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
+
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
   const [selectedAccount, setSelectedAccount] = React.useState("email@example.com");
 
@@ -75,7 +117,6 @@ export function Mail({
   const [selectedCategoryId, setSelectedCategoryId] = React.useState<string | null>(null);
 
   const [mails, setMails] = React.useState<Mail[]>([]);
-
 
   // Assuming setCategoryId is the setter function from useState for selectedCategoryId
   React.useEffect(() => {
@@ -108,6 +149,16 @@ export function Mail({
             date: new Date().toISOString(),
             read: false,
             labels: [],
+
+            existencia: product.existencia,
+            ultimo_costo: product.ultimo_costo,
+            costo_promedio: product.costo_promedio,
+            P3: product.P3,
+            estatus: product.estatus,
+            label: product.label,
+            prioridad: product.prioridad,
+            comprador: product.comprador || "",
+
           }));
           setMails(mappedMails);
         } else {
@@ -126,6 +177,15 @@ export function Mail({
             date: new Date().toISOString(),
             read: false,
             labels: [],
+
+            existencia: product.existencia,
+            ultimo_costo: product.ultimo_costo,
+            costo_promedio: product.costo_promedio,
+            P3: product.P3,
+            estatus: product.estatus,
+            label: product.label,
+            prioridad: product.prioridad,
+            comprador: product.comprador || "",
           }));
           setMails(mappedMails);
         } else {
@@ -166,9 +226,9 @@ export function Mail({
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsedSize={navCollapsedSize}
-          collapsible={true}
-          minSize={15}
-          maxSize={20}
+          collapsible={false}
+          minSize={17}
+          maxSize={17}
           onCollapse={((collapsed: boolean, panelId: string) => {
             setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
@@ -182,7 +242,7 @@ export function Mail({
         >
           <div
             className={cn(
-              "flex h-[52px] items-center justify-center",
+              "flex h-[52px] items-center justify-center p-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
               isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
@@ -193,6 +253,7 @@ export function Mail({
               setSelectedAccount={setSelectedAccount}
             />
           </div>
+
           <Separator />
           <ScrollArea className="flex flex-col h-[560px] overflow-auto">
             {/* 
@@ -250,7 +311,7 @@ export function Mail({
               links={categories.map((category) => ({
                 title: ((title: string) => title.length >= 20 ? `${title.slice(0, 20)}...` : title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))(category.title),
                 label: category.label.toString(),
-                icon: Inbox,
+                icon: Flame,
                 variant: category.code === selectedCategoryId ? "default" : "ghost",
                 onClick: () => handleCategorySelect(category.code),
               }))}
@@ -259,50 +320,56 @@ export function Mail({
           </ScrollArea>
 
           <Separator />
-          {/* <Nav
+          <Nav
             isCollapsed={isCollapsed}
             links={[
               {
-                title: "Social",
+                title: "Destacados",
                 label: "972",
-                icon: Users2,
+                icon: Gem,
                 variant: "ghost",
+                onClick: () => { },
               },
               {
-                title: "Updates",
+                title: "Faltantes",
                 label: "342",
-                icon: AlertCircle,
+                icon: TriangleAlert,
                 variant: "ghost",
+                onClick: () => { },
               },
               {
-                title: "Forums",
+                title: "Nuevos",
                 label: "128",
                 icon: MessagesSquare,
                 variant: "ghost",
+                onClick: () => { },
               },
               {
-                title: "Shopping",
+                title: "Promociones",
                 label: "8",
                 icon: ShoppingCart,
                 variant: "ghost",
+                onClick: () => { },
               },
-              {
-                title: "Promotions",
-                label: "21",
-                icon: Archive,
-                variant: "ghost",
-              },
+              // {
+              //   title: "Promotions",
+              //   label: "21",
+              //   icon: Archive,
+              //   variant: "ghost",
+              // },
             ]}
-          /> */}
+          />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle
+        //  withHandle 
+        />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={20} maxSize={30}>
 
-          <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="bg-background/95 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <form>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Buscar" className="pl-8" />
+                <Input placeholder="Buscar" className="pl-8 font-normal text-xs" />
               </div>
             </form>
           </div>
@@ -348,7 +415,9 @@ export function Mail({
             </TabsContent>
           </Tabs> */}
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle
+        // withHandle 
+        />
         <ResizablePanel defaultSize={defaultLayout[2]}>
 
 

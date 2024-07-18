@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useTheme } from "next-themes"
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
 
 import { useConfig } from "@/hooks/use-config"
 import {
@@ -19,33 +19,27 @@ import { Bar, BarChart, XAxis, YAxis } from "recharts"
 import { themes } from "@/themes"
 import getProductDrain from "@/app/actions/getProductDrain";
 import { ProductDrain } from "@/app/models/ProductDrain";
-import { Skeleton } from "@/components/ui/skeleton";
 
-// const data = [
-//   { name: "Jan", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
-//   { name: "Feb", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
+const chartConfig = {
+  desktop: {
+    label: "Autoservicio",
+    color: "hsl(var(--chart-1))",
+  },
+  mobile: {
+    label: "Distribución",
+    color: "hsl(var(--chart-2))",
+  },
+} satisfies ChartConfig
 
-//   { name: "Mar", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Apr", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "May", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Jun", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Jul", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Aug", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Sep", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Oct", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Nov", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 },
-
-//   { name: "Dec", total_CY: Math.floor(Math.random() * 5000) + 1000, total_2_CY: Math.floor(Math.random() * 5000) + 1000, total_LY: Math.floor(Math.random() * 5000) + 1000, total_2_LY: Math.floor(Math.random() * 5000) + 1000 }
-// ];
 
 interface ProductCardsMetricProps {
   ean: string;
@@ -96,8 +90,47 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
       <CardContent className="pb-4">
 
 
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto max-h-[250px]"
+        >
+          <BarChart accessibilityLayer data={productData}>
 
-        <ResponsiveContainer width="100%" height={250}>
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="MonthName" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} className="text-[0.70rem]"/>
+            {/* <YAxis stroke="#888888" fontSize={9} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}`} /> */}
+
+            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+            {/* <ChartLegend content={<ChartLegendContent />} /> */}
+
+            <Bar
+              dataKey="A_LY" stackId="LY"
+              style={
+                {
+                  fill: "var(--theme-primary)",
+                  opacity: 0.1,
+                  "--theme-primary": `hsl(${theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
+                    })`,
+                } as React.CSSProperties
+              }
+            />
+            <Bar
+              dataKey="D_LY" radius={[4, 4, 0, 0]} stackId="LY"
+              style={
+                {
+                  fill: "var(--theme-primary)",
+                  opacity: 0.2,
+                  "--theme-primary": `hsl(${theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
+                    })`,
+                } as React.CSSProperties
+              }
+            />
+            <Bar dataKey="A_CY" fill="#93c5fd" stackId="CY" />
+            <Bar dataKey="D_CY" fill="#3b82f6" radius={[4, 4, 0, 0]} stackId="CY" />
+          </BarChart>
+        </ChartContainer>
+
+        {/* <ResponsiveContainer width="100%" height={250}>
 
           <BarChart data={productData} barGap={4} barSize={40} >
             <XAxis
@@ -153,7 +186,7 @@ export function ProductCardsMetric({ ean }: ProductCardsMetricProps) {
             />
 
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
 
       </CardContent>
     </Card>

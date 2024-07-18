@@ -52,7 +52,7 @@ import {
 
 async function fetchTasks(type: string) {
 
-    let url = 'https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/listing';
+    let url = 'https://lxs.ngrok.app/api/v1/products/listing';
     if (type !== '' && type !== 'default') {
         url += `?ean=${type}`;
     }

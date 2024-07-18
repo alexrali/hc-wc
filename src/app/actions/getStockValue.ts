@@ -10,7 +10,7 @@ const getStockValue = async (ean: string): Promise<GetStockValueAction> => {
     console.log('getStockValue called with', { ean });
 
     try {
-        const response = await axios.get(`https://1a55-187-140-145-74.ngrok-free.app/api/v1/products/stock-values/${ean}`, {
+        const response = await axios.get(`https://lxs.ngrok.app/api/v1/products/stock-values/${ean}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'any value'
             },
