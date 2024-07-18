@@ -29,6 +29,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-table": "^8.17.3",
+    "@types/recharts": "^1.8.29",
     "@vercel/speed-insights": "^1.0.10",
     "axios": "^1.7.1",
     "bun": "^1.1.7",
@@ -57,7 +58,6 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "upgrade": "^1.1.0",
-    "xlsx": "^0.18.5",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },

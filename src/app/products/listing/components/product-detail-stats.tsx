@@ -118,7 +118,7 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
 
                 <div className="col-span-2 row-span-2 p-4 bg-card rounded-lg shadow-sm">
 
-                    {/* <ChartContainer
+                     <ChartContainer
                         config={chartConfig}
                         className="mx-auto aspect-square max-h-[250px]"
                     >
@@ -136,9 +136,9 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
                                 innerRadius={60}
                             />
                         </PieChart>
-                    </ChartContainer> */}
+                    </ChartContainer>  
 
-                    {/* <ResponsiveContainer width={220} height={180}>
+                     {/* <ResponsiveContainer width={220} height={180}>
                         <PieChart>
                             <Pie
                                 data={data}
@@ -180,8 +180,8 @@ export function ProductCardsStats({ ean }: ProductCardsStatsProps) {
                             />
 
                         </PieChart>
-                    </ResponsiveContainer>
-                     */}
+                    </ResponsiveContainer> */}
+                    
                 </div>
 
                 <div className="p-4 col-span-2 row-span-2 bg-card rounded-lg shadow-sm">

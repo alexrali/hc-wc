@@ -21,7 +21,7 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowDownIcon, ArrowUpIcon, UserRoundIcon, UsersRoundIcon, StoreIcon, ExpandIcon, TrendingUp } from "lucide-react"
 
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, } from 'recharts';
-import { PieSectorDataItem } from 'recharts/types/component/Pie';
+import { PieSectorDataItem } from "recharts/types/polar/Pie"
 
 import {
     ChartConfig,
