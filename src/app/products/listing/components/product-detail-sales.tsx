@@ -22,6 +22,8 @@ import getProductDrain from "@/app/actions/getProductDrain"
 import { useTheme } from "next-themes"
 import { useConfig } from "@/hooks/use-config"
 import { themes } from "@/themes"
+import CountUp from 'react-countup';
+
 
 interface ChartDataEntry {
   month: string;
@@ -101,7 +103,7 @@ export function ProductSales({ ean }: ProductSalesProps) {
               distribucion_ly: item.D_LY,
               sucursales_ly: item.A_LY,
             }));
-            
+
             setProductData(newChartData);
             console.log('newChartData', newChartData);
           }
@@ -112,7 +114,7 @@ export function ProductSales({ ean }: ProductSalesProps) {
         console.error('Error fetching product drain:', error);
       }
     };
-  
+
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ean]);
@@ -132,10 +134,10 @@ export function ProductSales({ ean }: ProductSalesProps) {
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Registro de Ventas</CardTitle>
-          <CardDescription>
-            Mostrando informacion anual
-          </CardDescription>
+          <CardTitle><span className="text-3xl font-bold tracking-tighter leading-none">Sell Out</span></CardTitle>
+          {/* <CardDescription>
+            <span className="text-[.70rem] tracking-tighter"> Registro mensual por canal</span>
+          </CardDescription> */}
         </div>
         {/* <div className="flex">
           {["distribucion", "sucursales"].map((key) => {
@@ -168,11 +170,11 @@ export function ProductSales({ ean }: ProductSalesProps) {
                 className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
                 onClick={() => setActiveChart(chart)}
               >
-                <span className="text-xs text-muted-foreground">
+                <span className="text-[.70rem] tracking-tighter leading-none text-muted-foreground">
                   {chartConfig[chart].label}
                 </span>
-                <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                <span className="text-2xl font-bold tracking-tighter leading-none sm:text-3xl">
+                  <CountUp end={total[key as keyof typeof total]} duration={1.75} />
                 </span>
                 {/* <span className="text-sm leading-none sm:text-xl">
                   Last Year: {total[lastYearKey].toLocaleString()} 
@@ -196,7 +198,7 @@ export function ProductSales({ ean }: ProductSalesProps) {
             }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} className="text-[0.70rem]"/>
+            <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} className="text-[0.70rem]" />
 
             <ChartTooltip
               content={
@@ -207,16 +209,16 @@ export function ProductSales({ ean }: ProductSalesProps) {
               }
             />
 
-            <Bar dataKey={`${activeChart}_ly`} 
-            style={
+            <Bar dataKey={`${activeChart}_ly`}
+              style={
                 {
                   fill: "var(--theme-primary)",
                   opacity: 0.1,
                   "--theme-primary": `hsl(${theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
                     })`,
                 } as React.CSSProperties
-              }/>
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
+              } radius={4}/>
+            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} radius={4}/>
 
           </BarChart>
         </ChartContainer>

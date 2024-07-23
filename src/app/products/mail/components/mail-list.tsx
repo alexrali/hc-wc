@@ -38,12 +38,12 @@ export function MailList({ items }: MailListProps) {
 
   return (
     <ScrollArea className="h-screen bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex flex-col gap-2 p-4 pt-2">
+      <div className="flex flex-col gap-2 p-2 pt-2">
         {items.map((item) => (
           <button
             key={item.id}
             className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+              "flex flex-col items-start gap-3 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
               mail.selected === item.id && "bg-muted"
             )}
             onClick={() =>
@@ -88,21 +88,32 @@ export function MailList({ items }: MailListProps) {
               )}
               <div className="flex flex-col">
                 {/* Item name */}
+                
                 <div className="font-bold text-xs">
                   {item.name} - <span className="text-[0.70rem] font-normal">{item.text}</span></div>
 
                 {/* Item subject and existencia badge */}
                 <div className="flex items-center gap-2">
-                  <div className="text-[0.70rem] font-normal text-muted-foreground">{item.subject}</div>
+
+                  <div className="flex gap-2">
+                    {item.prioridad && (
+                      <Badge variant={getBadgeVariantFromPriority(item.prioridad)}>
+                        {item.prioridad}
+                      </Badge>
+                    )}
+                  </div>
+
+                  <span className="text-[0.70rem] font-normal text-muted-foreground">{item.subject}</span>
                   {/* Badge for item.existencia */}
                   {/* <Badge variant="outline"> */}
-                    <span className="px-1 py-1 text-[0.70rem] font-semibold">{item.existencia}</span>
+                  <span className="px-1 py-1 text-[0.70rem] font-semibold">{item.existencia} </span>
                   {/* </Badge> */}
                 </div>
-              
-            </div>
 
-          </div>
+              </div>
+
+
+            </div>
 
 
             {/* <div className="flex items-center gap-2">
@@ -130,7 +141,7 @@ export function MailList({ items }: MailListProps) {
             ) : null} */}
           </button>
         ))}
-    </div>
+      </div>
     </ScrollArea >
   )
 }
@@ -152,6 +163,19 @@ function getStatusClassName(status: string): string {
   }
 }
 
+function getBadgeVariantFromPriority(
+  priority: string
+): ComponentProps<typeof Badge>["variant"] {
+  if (["ax"].includes(priority.toLowerCase())) {
+    return "default"
+  }
+
+  if (["ay"].includes(priority.toLowerCase())) {
+    return "secondary"
+  }
+
+  return "outline"
+}
 
 function getBadgeVariantFromLabel(
   label: string
