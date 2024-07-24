@@ -1,3 +1,5 @@
+'use client'
+
 // import addDays from "date-fns/addDays"
 // import addHours from "date-fns/addHours"
 
@@ -77,6 +79,12 @@ import { ProductSales } from '../../listing/components/product-detail-sales';
 import { ProductCardsStockHistory } from '../../listing/components/product-detail-stock-history';
 import { ProductPurchases } from '../../listing/components/product-detail-purchases';
 import { ProductInventoryStatus } from '../../listing/components/product-detail-inventory-status';
+import { ProductBalance } from '../../listing/components/product-detail-balance';
+import getProductDetail from '@/app/actions/getProductCommercialDetail';
+import { useEffect, useState } from 'react';
+import { ProductCommercialDetail } from '@/app/models/ProductCommercialDetail';
+import { ProductDetailPerformance } from '../../listing/components/product-detail-performance';
+import { ProductDetailDoh } from '../../listing/components/product-detail-doh';
 
 interface MailDisplayProps {
   mail: Mail | null
@@ -84,6 +92,23 @@ interface MailDisplayProps {
 
 export function MailDisplay({ mail }: MailDisplayProps) {
   const today = new Date()
+  const [productDetail, setProductDetail] = useState<ProductCommercialDetail | null>(null);
+
+  useEffect(() => {
+    if (mail && mail.id) { // Ensure mail and mail.id are not null or undefined
+      getProductDetail(mail.id).then((action) => {
+        if (action.type === 'GET_PRODUCT_DETAIL_SUCCESS') {
+          if (typeof action.payload === 'object' && action.payload !== null) {
+            setProductDetail(action.payload);
+            // console.log('ProductCommercialDetail:', action.payload);
+          } else {
+            console.error('Payload is not a ProductCommercialDetail:', action.payload);
+            setProductDetail(null);
+          }
+        }
+      });
+    }
+  }, [mail, mail?.id]); // Re-fetch if mail.id changes
 
   return (
     <div className="flex h-full flex-col">
@@ -309,221 +334,21 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 <div className="col-span-8">
                   <ProductSales ean={mail.id} />
                 </div>
+
                 <div className="col-span-4 gap-4">
-                  <Card
-                    className="w-full" x-chunk="charts-01-chunk-2"
-                  >
-                    <CardHeader>
-                      <CardTitle><span className="font-bold tracking-tighter leading-none">Desempeño</span></CardTitle>
-                      {/* <CardDescription>
-                        <span className="text-[.70rem] tracking-tighter">Diferencia porcentual respecto al mismo periodo del año anterior</span>
-                      </CardDescription> */}
-                    </CardHeader>
-                    <CardContent className="grid gap-1">
+                  <ProductDetailPerformance productDetail={productDetail as ProductCommercialDetail} />
 
-                      <div className="grid auto-rows-min gap-0">
-                        <div className="flex items-baseline gap-1 text-2xl font-bold leading-none sm:text-3xl">
-                          <span className="tracking-tighter">
-                            32%
-                          </span>
-                          <span className="text-[.70rem] font-normal text-muted-foreground">
-                            anual
-                          </span>
-                        </div>
-                        <ChartContainer
-                          config={{
-                            steps: {
-                              label: "Steps",
-                              color: "hsl(var(--chart-1))",
-                            },
-                          }}
-                          className="aspect-auto h-[32px] w-full"
-                        >
-                          <BarChart
-                            accessibilityLayer
-                            layout="vertical"
-                            margin={{
-                              left: 0,
-                              top: 0,
-                              right: 0,
-                              bottom: 0,
-                            }}
-                            data={[
-                              {
-                                date: "2024",
-                                steps: 12435,
-                              },
-                            ]}
-                          >
-                            <Bar
-                              dataKey="steps"
-                              fill="var(--color-steps)"
-                              radius={4}
-                              barSize={32}
-                            >
-                              <LabelList
-                                position="insideLeft"
-                                dataKey="date"
-                                offset={8}
-                                fontSize={12}
-                                fill="white"
-                              />
-                            </Bar>
-                            <YAxis dataKey="date" type="category" tickCount={1} hide />
-                            <XAxis dataKey="steps" type="number" hide />
-                          </BarChart>
-                        </ChartContainer>
-                      </div>
-
-                      <div className="grid auto-rows-min gap-0 mt-2">
-                        <div className="flex items-baseline gap-1 text-3xl font-bold leading-none sm:text-3xl">
-                          <span className="tracking-tighter">
-                            10.2%
-                          </span>
-                          <span className="text-[.70rem] font-normal text-muted-foreground">
-                            mensual
-                          </span>
-                        </div>
-                        <ChartContainer
-                          config={{
-                            steps: {
-                              label: "Steps",
-                              color: "hsl(var(--muted))",
-                            },
-                          }}
-                          className="aspect-auto h-[32px] w-full"
-                        >
-                          <BarChart
-                            accessibilityLayer
-                            layout="vertical"
-                            margin={{
-                              left: 0,
-                              top: 0,
-                              right: 0,
-                              bottom: 0,
-                            }}
-                            data={[
-                              {
-                                date: "2023",
-                                steps: 10103,
-                              },
-                            ]}
-                          >
-                            <Bar
-                              dataKey="steps"
-                              fill="var(--color-steps)"
-                              radius={4}
-                              barSize={32}
-                            >
-                              <LabelList
-                                position="insideLeft"
-                                dataKey="date"
-                                offset={8}
-                                fontSize={12}
-                                fill="hsl(var(--muted-foreground))"
-                              />
-                            </Bar>
-                            <YAxis dataKey="date" type="category" tickCount={1} hide />
-                            <XAxis dataKey="steps" type="number" hide />
-                          </BarChart>
-                        </ChartContainer>
-                      </div>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="max-w-xs mt-4" x-chunk="charts-01-chunk-6" >
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle><span className="font-bold tracking-tighter leading-none">Dias de Inventario</span></CardTitle>
-
-                      <CardDescription>
-                        <span className="text-[.70rem] tracking-tighter">Existencia suficiente para los siguientes </span>
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex flex-row items-baseline gap-4 p-4 pt-3">
-                      <div className="flex items-baseline gap-2 text-3xl font-bold leading-none sm:text-3xl">
-                        1,254
-                        <span className="text-sm font-normal text-muted-foreground">
-                          kcal/day
-                        </span>
-                      </div>
-                      <ChartContainer
-                        config={{
-                          calories: {
-                            label: "Calories",
-                            color: "hsl(var(--chart-1))",
-                          },
-                        }}
-                        className="ml-auto w-[64px]"
-                      >
-                        <BarChart
-                          accessibilityLayer
-                          margin={{
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                          }}
-                          data={[
-                            {
-                              date: "2024-01-01",
-                              calories: 354,
-                            },
-                            {
-                              date: "2024-01-02",
-                              calories: 514,
-                            },
-                            {
-                              date: "2024-01-03",
-                              calories: 345,
-                            },
-                            {
-                              date: "2024-01-04",
-                              calories: 734,
-                            },
-                            {
-                              date: "2024-01-05",
-                              calories: 645,
-                            },
-                            {
-                              date: "2024-01-06",
-                              calories: 456,
-                            },
-                            {
-                              date: "2024-01-07",
-                              calories: 345,
-                            },
-                          ]}
-                        >
-                          <Bar
-                            dataKey="calories"
-                            fill="var(--color-calories)"
-                            radius={2}
-                            fillOpacity={0.2}
-                            activeIndex={6}
-                            activeBar={<Rectangle fillOpacity={0.8} />}
-                          />
-                          <XAxis
-                            dataKey="date"
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={4}
-                            hide
-                          />
-                        </BarChart>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
+                  <ProductDetailDoh productDetail={productDetail as ProductCommercialDetail} />
 
                 </div>
+
               </div>
             </div>
 
             <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-4 sm:flex-row sm:pt-4">
+
               <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
-
                 <ProductPurchases ean={mail.id} />
-
                 <Card
                   className="lg:max-w-md" x-chunk="charts-01-chunk-0"
                 >
@@ -654,9 +479,10 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 </Card>
 
               </div>
+
               <div className="grid w-full flex-1 gap-4 lg:max-w-[20rem]">
-                        
-              < ProductInventoryStatus ean={mail.id} />
+
+                < ProductInventoryStatus ean={mail.id} />
                 <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-5"
                 >
@@ -832,8 +658,67 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 </Card>
 
               </div>
+
               <div className="grid w-full flex-1 gap-4 lg:max-w-[25rem]">
 
+
+                {/* <ChartContainer
+                      config={{
+                        move: {
+                          label: "Move",
+                          color: "hsl(var(--chart-1))",
+                        },
+                        exercise: {
+                          label: "Exercise",
+                          color: "hsl(var(--chart-2))",
+                        },
+                        stand: {
+                          label: "Stand",
+                          color: "hsl(var(--chart-3))",
+                        },
+                      }}
+                      className="mx-auto aspect-square w-full max-w-[80%]"
+                    >
+                      <RadialBarChart
+                        margin={{
+                          left: -10,
+                          right: -10,
+                          top: -10,
+                          bottom: -10,
+                        }}
+                        data={[
+                          {
+                            activity: "stand",
+                            value: (8 / 12) * 100,
+                            fill: "var(--color-stand)",
+                          },
+                          {
+                            activity: "exercise",
+                            value: (46 / 60) * 100,
+                            fill: "var(--color-exercise)",
+                          },
+                          {
+                            activity: "move",
+                            value: (245 / 360) * 100,
+                            fill: "var(--color-move)",
+                          },
+                        ]}
+                        innerRadius="20%"
+                        barSize={24}
+                        startAngle={90}
+                        endAngle={450}
+                      >
+                        <PolarAngleAxis
+                          type="number"
+                          domain={[0, 100]}
+                          dataKey="value"
+                          tick={false}
+                        />
+                        <RadialBar dataKey="value" background cornerRadius={5} />
+                      </RadialBarChart>
+                    </ChartContainer> */}
+
+                <ProductBalance productDetail={productDetail as ProductCommercialDetail} />
                 <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-4"
                 >
@@ -1056,6 +941,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                     </div>
                   </CardContent>
                 </Card>
+
                 <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-3"
                 >
@@ -1142,6 +1028,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 </Card>
 
               </div>
+
             </div>
 
           </ScrollArea>
