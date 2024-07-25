@@ -97,7 +97,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
             className="max-w-xs" x-chunk="charts-01-chunk-5"
         >
             <CardContent className="flex gap-4 p-4">
-                <div className="grid items-center gap-2 w-[200px]">
+                <div className="grid items-center gap-2 w-[160px]">
                     <div className="grid flex-1 auto-rows-min gap-0.5">
                         <div className="text-xs text-muted-foreground">Demanda</div>
                         <div className="flex items-baseline gap-1 text-2xl font-bold  tracking-tighter leading-none sm:text-1xl">
@@ -133,7 +133,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
 
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square w-full max-w-[80%]"
+                    className="mx-auto aspect-square w-full max-w-[50%]"
                 >
                     <PieChart>
                         <ChartTooltip
@@ -145,7 +145,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                             dataKey="value"
                             nameKey="name"
                             paddingAngle={5}
-                            innerRadius={35}
+                            innerRadius={34}
                             activeIndex={data[0].name === 'Distribucion' && data[0].value > 50 ? 0 : 1}
                             activeShape={({
                                 outerRadius = 4,
@@ -156,7 +156,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                                     <Sector {...props} outerRadius={outerRadius} cornerRadius={4} />
                                     <Sector
                                         {...props}
-                                        outerRadius={outerRadius + 10}
+                                        outerRadius={outerRadius + 14}
                                         innerRadius={outerRadius + 3}
                                         cornerRadius={cornerRadius}
                                     />

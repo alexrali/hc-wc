@@ -227,8 +227,8 @@ export function Mail({
           defaultSize={defaultLayout[0]}
           collapsedSize={navCollapsedSize}
           collapsible={false}
-          minSize={17}
-          maxSize={17}
+          minSize={13}
+          maxSize={13}
           onCollapse={((collapsed: boolean, panelId: string) => {
             setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
@@ -255,7 +255,7 @@ export function Mail({
           </div>
 
           <Separator />
-          <ScrollArea className="flex flex-col h-[560px] overflow-auto">
+          <ScrollArea className="flex flex-col h-[500px] overflow-auto">
             {/* 
             <div>
               <span>

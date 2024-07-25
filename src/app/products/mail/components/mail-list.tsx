@@ -89,8 +89,9 @@ export function MailList({ items }: MailListProps) {
               <div className="flex flex-col">
                 {/* Item name */}
                 
-                <div className="font-bold text-xs">
-                  {item.name} - <span className="text-[0.70rem] font-normal">{item.text}</span></div>
+                <div className="font-bold text-xs tracking-tight leading-none mb-1">
+                  {item.name} - <span className="text-[0.70rem] font-normal text-muted-foreground">{item.text}</span>
+                </div>
 
                 {/* Item subject and existencia badge */}
                 <div className="flex items-center gap-2">
