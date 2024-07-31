@@ -33,9 +33,10 @@ export function AccountSwitcher({
   //   accounts[0].email
   // )
 
+  console.log('isCollapsed:', isCollapsed);
   return (
     <Select defaultValue={selectedAccount} onValueChange={setSelectedAccount}>
-      <SelectTrigger
+       <SelectTrigger
         className={cn(
           "flex items-center gap-2 [&>span]:line-clamp-1 [&>span]:flex [&>span]:w-full [&>span]:items-center [&>span]:gap-1 [&>span]:truncate [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0",
           isCollapsed &&
@@ -43,7 +44,7 @@ export function AccountSwitcher({
         )}
         aria-label="Elige una cuenta"
       >
-        <SelectValue placeholder="Select an account">
+        <SelectValue placeholder="Elige una cuenta">
           {accounts.find((account) => account.email === selectedAccount)?.icon}
           <span className={cn("ml-2 text-xs font-extrabold", isCollapsed && "hidden")}>
             {
@@ -51,18 +52,20 @@ export function AccountSwitcher({
                 ?.label
             }
           </span>
-        </SelectValue>
+        </SelectValue> 
+
       </SelectTrigger>
-      <SelectContent>
-        {accounts.map((account) => (
-          <SelectItem key={account.email} value={account.email}>
-            <div className="flex items-center text-xs gap-3 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-foreground">
-              {account.icon}
-              {account.label}
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
+
+        <SelectContent>
+          {accounts.map((account) => (
+            <SelectItem key={account.email} value={account.email}>
+              <div className="flex items-center text-xs gap-3 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-foreground">
+                {account.icon}
+                {account.label}
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
     </Select>
   )
 }

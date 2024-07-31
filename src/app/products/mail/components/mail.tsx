@@ -16,6 +16,10 @@ import {
   Users2,
   Gem,
   TriangleAlert,
+  Dot,
+  CircleDot,
+  ChevronRight,
+  ChevronRightCircle,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -40,7 +44,6 @@ import { MailList } from "@/app//products/mail/components/mail-list"
 import { Nav } from "@/app//products/mail/components/nav"
 // import { type Mail } from "@/app/products/mail/data"
 import { useMail } from "@/app//products/mail/use-mail"
-import { PanelOnCollapse } from "react-resizable-panels"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 import getProviderCategories from "@/app/actions/getProviderCategories"
@@ -48,6 +51,7 @@ import { ProviderCategory } from "@/app/models/ProviderCategory"
 import getProviderProducts from "@/app/actions/getProviderProducts";
 import { set } from "lodash"
 import { AccountDisplay } from "./account-display"
+import { PanelOnCollapse } from "react-resizable-panels"
 
 
 
@@ -100,6 +104,7 @@ interface MailProps {
   navCollapsedSize: number
 }
 
+
 export function Mail({
   accounts,
   //mails,
@@ -108,7 +113,7 @@ export function Mail({
   navCollapsedSize,
 }: MailProps) {
 
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
+  const [isCollapsed, setIsCollapsed] = React.useState(false)
   const [selectedAccount, setSelectedAccount] = React.useState("email@example.com");
 
   const [mail] = useMail()
@@ -123,6 +128,21 @@ export function Mail({
     // Reset selectedCategoryId to null whenever selectedAccount changes
     setSelectedCategoryId(null);
   }, [selectedAccount]); // Dependency array includes only selectedAccount to trigger on its change
+
+  // Optional: Load the initial state from localStorage if persistence is needed
+  // React.useEffect(() => {
+  //   const savedCollapsedState = localStorage.getItem('react-resizable-panels:collapsed');
+  //   if (savedCollapsedState !== null) {
+  //     setIsCollapsed(JSON.parse(savedCollapsedState));
+  //   }
+  // }, []);
+
+
+  // const handleCollapse = (collapsed : boolean) => {
+  //   setIsCollapsed(collapsed);
+  //   // Optional: Save to localStorage for persistence across sessions
+  //   localStorage.setItem('react-resizable-panels:collapsed', JSON.stringify(collapsed));
+  // };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -226,15 +246,17 @@ export function Mail({
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsedSize={navCollapsedSize}
-          collapsible={false}
-          minSize={13}
-          maxSize={13}
-          onCollapse={((collapsed: boolean, panelId: string) => {
-            setIsCollapsed(collapsed);
+          collapsible={true}
+          minSize={5}
+          maxSize={15}
+          onCollapse={((collapsed: boolean) => {
+            setIsCollapsed(true);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
               collapsed
-            )};panelId=${panelId}`;
-          }) as unknown as PanelOnCollapse}
+            )}`
+          }) as PanelOnCollapse}
+          // onCollapse={handleCollapse as PanelOnCollapse}
+          onExpand={() => setIsCollapsed(false)}
           className={cn(
             isCollapsed &&
             "min-w-[50px] transition-all duration-300 ease-in-out"
@@ -311,7 +333,7 @@ export function Mail({
               links={categories.map((category) => ({
                 title: ((title: string) => title.length >= 20 ? `${title.slice(0, 20)}...` : title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))(category.title),
                 label: category.label.toString(),
-                icon: Flame,
+                icon: ChevronRightCircle,
                 variant: category.code === selectedCategoryId ? "default" : "ghost",
                 onClick: () => handleCategorySelect(category.code),
               }))}
@@ -363,7 +385,7 @@ export function Mail({
         <ResizableHandle
         //  withHandle 
         />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={20} maxSize={30}>
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={20} maxSize={20} >
 
           <div className="bg-background/95 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <form>

@@ -24,7 +24,14 @@ async function fetchAndFormatAccounts(): Promise<Account[]> {
       label: provider.title, // Ensure this matches the actual provider object structure
       email: provider.code, // Ensure this matches the actual provider object structure
       icon: (
-        <svg fill="#000000" width="89px" height="89px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M128 209c-44.735 0-81-36.265-81-81s36.265-81 81-81 81 36.265 81 81-36.265 81-81 81zm.5-33c26.51 0 48-21.49 48-48s-21.49-48-48-48-48 21.49-48 48 21.49 48 48 48z" fill-rule="evenodd"></path> </g></svg>
+        <svg fill="#000000" width="89px" height="89px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier"> 
+            <path d="M128 209c-44.735 0-81-36.265-81-81s36.265-81 81-81 81 36.265 81 81-36.265 81-81 81zm.5-33c26.51 0 48-21.49 48-48s-21.49-48-48-48-48 21.49-48 48 21.49 48 48 48z" fill-rule="evenodd"></path> 
+          </g>
+        </svg>
+
       ),
     }));
   }
@@ -39,6 +46,8 @@ export default async function MailPage() {
   const defaultLayout = layout && layout.value !== "undefined" ? JSON.parse(layout.value) : undefined;
   const defaultCollapsed = collapsed && collapsed.value !== "undefined" ? JSON.parse(collapsed.value) : undefined;
 
+
+  console.log("defaultCollapsed on page:", defaultCollapsed);
   const accounts = await fetchAndFormatAccounts();
 
   return (
@@ -66,7 +75,7 @@ export default async function MailPage() {
             //mails={mails}
             defaultLayout={defaultLayout}
             defaultCollapsed={defaultCollapsed}
-            navCollapsedSize={4}
+            navCollapsedSize={3}
           />
         </div>
 
