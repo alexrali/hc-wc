@@ -86,6 +86,7 @@ import { ProductCommercialDetail } from '@/app/models/ProductCommercialDetail';
 import { ProductDetailPerformance } from '../../listing/components/product-detail-performance';
 import { ProductDetailDoh } from '../../listing/components/product-detail-doh';
 import { ProductStoresSales } from '../../listing/components/product-detail-stores-sales';
+import { ProductDistributionSales } from '../../listing/components/product-detail-distribution-sales';
 
 interface MailDisplayProps {
   mail: Mail | null
@@ -350,7 +351,9 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
               <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
                 <ProductPurchases ean={mail.id} />
-                <Card
+
+                <ProductDistributionSales ean={mail.id} />
+                {/* <Card
                   className="lg:max-w-md" x-chunk="charts-01-chunk-0"
                 >
                   <CardHeader className="space-y-0 pb-2">
@@ -477,14 +480,15 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       steps to reach your goal.
                     </CardDescription>
                   </CardFooter>
-                </Card>
+                </Card> */}
 
               </div>
 
               <div className="grid w-full flex-1 gap-4 lg:max-w-[20rem]">
 
                 <ProductInventoryStatus ean={mail.id} />
-                <Card
+
+                {/* <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-5"
                 >
                   <CardContent className="flex gap-4 p-4">
@@ -573,8 +577,10 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </RadialBarChart>
                     </ChartContainer>
                   </CardContent>
-                </Card>
-                <Card
+
+                </Card> */}
+
+                {/* <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-6"
                 >
                   <CardHeader className="p-4 pb-0">
@@ -656,7 +662,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </BarChart>
                     </ChartContainer>
                   </CardContent>
-                </Card>
+                </Card> */}
 
               </div>
 
@@ -723,7 +729,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
                 <ProductStoresSales ean={mail.id} />
 
-                <Card
+                {/* <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-2"
                 >
                   <CardHeader>
@@ -836,9 +842,9 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </ChartContainer>
                     </div>
                   </CardContent>
-                </Card>
+                </Card> */}
 
-                <Card
+                {/* <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-3"
                 >
                   <CardHeader className="p-4 pb-0">
@@ -921,7 +927,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </BarChart>
                     </ChartContainer>
                   </CardContent>
-                </Card>
+                </Card> */}
 
               </div>
 
