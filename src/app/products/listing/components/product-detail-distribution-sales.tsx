@@ -158,7 +158,7 @@ export function ProductDistributionSales({ ean }: ProductDistributionSalesProps)
                                             {item.payload.cluster} 
 
                                         </div>  */}
-                                            {/* <div className="mb-1 ">
+                                            <div className="mb-1 ">
                                                 <span className="text-xs font-medium">Clientes Producto </span>
                                                 <span className="text-[0.70rem] text-muted-foreground">{item.payload.product_clients}</span>
                                             </div>
@@ -169,22 +169,7 @@ export function ProductDistributionSales({ ean }: ProductDistributionSalesProps)
                                             <div className="mb-1">
                                                 <span className="text-xs font-medium">Clientes Clientes </span>
                                                 <span className="text-[0.70rem] text-muted-foreground">{item.payload.cluster_clients}</span>
-                                            </div> */}
-                                            {Array.isArray(item.payload) && item.payload.length > 0 ? (
-                                                <BarChart width={500} height={300} data={item.payload}>
-                                                    <CartesianGrid strokeDasharray="3 3" />
-                                                    <XAxis dataKey="name" />
-                                                    <YAxis />
-                                                    {/* <Tooltip /> */}
-                                                    {/* <Legend /> */}
-                                                    <Bar dataKey="product_clients" stackId="a" fill="#8884d8" name="Clientes Producto" />
-                                                    <Bar dataKey="category_clients" stackId="a" fill="#82ca9d" name="Clientes Categoria" />
-                                                    <Bar dataKey="cluster_clients" stackId="a" fill="#ffc658" name="Clientes Clientes" />
-                                                </BarChart>
-                                            ) : (
-                                                <div>Loading or no data available</div>
-                                            )}
-
+                                            </div> 
                                         </div>
 
 
