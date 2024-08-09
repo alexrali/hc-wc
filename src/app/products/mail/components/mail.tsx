@@ -385,7 +385,13 @@ export function Mail({
         <ResizableHandle
         //  withHandle 
         />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={20} maxSize={20} >
+        <ResizablePanel
+          defaultSize={defaultLayout[1]}
+          minSize={20}
+          maxSize={25}
+          collapsible={true}
+
+        >
 
           <div className="bg-background/95 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <form>
@@ -438,10 +444,10 @@ export function Mail({
           </Tabs> */}
         </ResizablePanel>
         <ResizableHandle
-        // withHandle 
+          withHandle
         />
-        <ResizablePanel defaultSize={defaultLayout[2]}>
 
+        <ResizablePanel defaultSize={defaultLayout[2]}>
 
           {mail.selected ? (
             <MailDisplay mail={mails.find((item) => item.id === mail.selected) || null} />
@@ -453,6 +459,7 @@ export function Mail({
 
         </ResizablePanel>
       </ResizablePanelGroup>
+
     </TooltipProvider>
   )
 }

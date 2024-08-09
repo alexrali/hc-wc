@@ -63,7 +63,9 @@ export function ProductPurchases({ ean }: ProductPurchasesProps) {
 
     return (
         <Card
-            className="flex flex-col lg:max-w-md" x-chunk="charts-01-chunk-1"
+            // className="flex flex-col lg:max-w-lg" 
+            className="max-w-md" 
+            x-chunk="charts-01-chunk-1"
         >
             <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2 [&>div]:flex-1">
                 <div>

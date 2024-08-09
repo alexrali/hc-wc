@@ -100,7 +100,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                 <div className="grid items-center gap-2 w-[160px]">
                     <div className="grid flex-1 auto-rows-min gap-0.5">
                         <div className="text-xs text-muted-foreground">Demanda</div>
-                        <div className="flex items-baseline gap-1 text-2xl font-bold  tracking-tighter leading-none sm:text-1xl">
+                        <div className="flex items-baseline gap-1 text-2xl font-bold leading-none sm:text-3xl">
                             <CountUp end={productDetail?.avg_demand !== undefined ? productDetail?.avg_demand : 0} duration={5} />
                             <span className="text-[0.7rem] font-normal tracking-tighter text-muted-foreground">
                                 mensual
@@ -109,12 +109,12 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                     </div>
                     <div className="grid flex-1 auto-rows-min gap-0.5">
                         <div className="text-xs text-muted-foreground">Participación</div>
-                        <div className="flex items-baseline gap-0.5 text-2xl font-bold tracking-tighter leading-none sm:text-1xl">
+                        <div className="flex items-baseline gap-1 text-2xl font-bold leading-none sm:text-3xl">
                             {productDetail?.som_cat !== undefined
                                 ? (productDetail.som_cat * 100).toFixed(1)
                                 : 'NA'}
                             <span className="text-[0.7rem] font-normal text-muted-foreground">
-                                % en categoria
+                                {/* % en categoria */}
                             </span>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
 
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square w-full max-w-[50%]"
+                    className="mx-auto aspect-square w-full max-w-[60%]"
                 >
                     <PieChart>
                         <ChartTooltip
@@ -148,7 +148,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                             innerRadius={34}
                             activeIndex={data[0].name === 'Distribucion' && data[0].value > 50 ? 0 : 1}
                             activeShape={({
-                                outerRadius = 4,
+                                outerRadius = 2,
                                 cornerRadius = 4,
                                 ...props
                             }: PieSectorDataItem) => (
@@ -156,8 +156,8 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
                                     <Sector {...props} outerRadius={outerRadius} cornerRadius={4} />
                                     <Sector
                                         {...props}
-                                        outerRadius={outerRadius + 14}
-                                        innerRadius={outerRadius + 3}
+                                        outerRadius={outerRadius + 10}
+                                        innerRadius={outerRadius + 2}
                                         cornerRadius={cornerRadius}
                                     />
                                 </g>

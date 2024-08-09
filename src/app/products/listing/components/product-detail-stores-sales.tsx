@@ -69,7 +69,7 @@ export function ProductStoresSales({ ean }: ProductStoresSalesProps) {
 
     return (
         <Card
-            className="max-w-xs" x-chunk="charts-01-chunk-4"
+            className="max-w-md" x-chunk="charts-01-chunk-4"
         >
             <CardContent className="flex gap-4 p-4 pb-2">
                 <ChartContainer

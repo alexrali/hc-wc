@@ -69,7 +69,7 @@ export function ProductInventoryStatus({ ean }: ProductInventoryProps) {
 
     return (
         <Card
-            className="max-w-xs" x-chunk="charts-01-chunk-7"
+            className="max-w-lg" x-chunk="charts-01-chunk-7"
         >
             <CardHeader className="space-y-0 pb-0">
                 <CardDescription><span className='text-xs text-muted-foreground'>Inventario</span></CardDescription>
@@ -159,7 +159,7 @@ export function ProductInventoryStatus({ ean }: ProductInventoryProps) {
                         <ChartTooltip
                             cursor={false}
                             content={
-                                <ChartTooltipContent 
+                                <ChartTooltipContent
                                 // hideLabel 
                                 />
                             }

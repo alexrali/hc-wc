@@ -13,7 +13,7 @@ type ProductDetailDohProps = {
 export function ProductDetailDoh( { productDetail }: ProductDetailDohProps ) {
 
     return (
-        <Card className="max-w-xs mt-4" x-chunk="charts-01-chunk-6" >
+        <Card className="max-w-xs" x-chunk="charts-01-chunk-6" >
             <CardHeader className="p-4 pb-0">
                 <CardTitle><span className="font-bold tracking-tighter leading-none">Existencia</span></CardTitle>
 

@@ -131,10 +131,10 @@ export function ProductSales({ ean }: ProductSalesProps) {
   )
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle><span className="text-3xl font-bold tracking-tighter leading-none">Sell Out</span></CardTitle>
+          <CardTitle><span className="font-bold tracking-tighter leading-none">Sell Out</span></CardTitle>
           {/* <CardDescription>
             <span className="text-[.70rem] tracking-tighter"> Registro mensual por canal</span>
           </CardDescription> */}

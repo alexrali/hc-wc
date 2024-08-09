@@ -253,6 +253,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
       <Separator />
 
       {mail ? (
+
         <div className="flex flex-1 flex-col">
           <div className="flex items-start p-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex items-start gap-4 text-sm">
@@ -331,29 +332,34 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 </div>
               </main> */}
 
-            <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-4 sm:flex-row sm:pt-4">
-              <div className="mx-auto gap-4 grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-12 w-full">
-                <div className="col-span-8">
+            <div className="chart-wrapper mx-auto flex flex-col flex-wrap items-start justify-center gap-4 p-4 sm:flex-row sm:p-8">
+
+              <div className="grid w-full gap-4 mx-auto sm:grid-cols-2 lg:grid-cols-12">
+
+                <div className="lg:col-span-8 gap-4">
+                  {/* This ensures that the ProductSales component takes up the remaining space on larger screens. */}
                   <ProductSales ean={mail.id} />
                 </div>
 
-                <div className="col-span-4 gap-4">
-                  <ProductDetailPerformance productDetail={productDetail as ProductCommercialDetail} />
-
-                  <ProductDetailDoh productDetail={productDetail as ProductCommercialDetail} />
-
+                <div className="w-full gap-4 lg:grid-cols-1 lg:col-span-3">
+                  <ProductBalance productDetail={productDetail as ProductCommercialDetail} />
+                  
                 </div>
 
               </div>
             </div>
 
-            <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-4 sm:flex-row sm:pt-4">
+            <div className="chart-wrapper mx-auto flex max-w-full flex-col flex-wrap items-start justify-center gap-4 sm:flex-row p-4 sm:pt-4">
 
-              <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
+              <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[28rem]">
+
+                <ProductDistributionSales ean={mail.id} />
+
                 <ProductPurchases ean={mail.id} />
 
                 <ProductDistributionSales ean={mail.id} />
-                {/* <Card
+
+                <Card
                   className="lg:max-w-md" x-chunk="charts-01-chunk-0"
                 >
                   <CardHeader className="space-y-0 pb-2">
@@ -480,15 +486,156 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       steps to reach your goal.
                     </CardDescription>
                   </CardFooter>
-                </Card> */}
+                </Card>
 
               </div>
 
-              <div className="grid w-full flex-1 gap-4 lg:max-w-[20rem]">
+
+              <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[28rem]">
+
+                <ProductBalance productDetail={productDetail as ProductCommercialDetail} />
+
 
                 <ProductInventoryStatus ean={mail.id} />
 
-                {/* <Card
+                <ProductPurchases ean={mail.id} />
+
+                <Card
+                  className="lg:max-w-md" x-chunk="charts-01-chunk-0"
+                >
+                  <CardHeader className="space-y-0 pb-2">
+                    <CardDescription>Today</CardDescription>
+                    <CardTitle className="text-4xl tabular-nums">
+                      12,584{" "}
+                      <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
+                        steps
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ChartContainer
+                      config={{
+                        steps: {
+                          label: "Steps",
+                          color: "hsl(var(--chart-1))",
+                        },
+                      }}
+                    >
+                      <BarChart
+                        accessibilityLayer
+                        margin={{
+                          left: -4,
+                          right: -4,
+                        }}
+                        data={[
+                          {
+                            date: "2024-01-01",
+                            steps: 2000,
+                          },
+                          {
+                            date: "2024-01-02",
+                            steps: 2100,
+                          },
+                          {
+                            date: "2024-01-03",
+                            steps: 2200,
+                          },
+                          {
+                            date: "2024-01-04",
+                            steps: 1300,
+                          },
+                          {
+                            date: "2024-01-05",
+                            steps: 1400,
+                          },
+                          {
+                            date: "2024-01-06",
+                            steps: 2500,
+                          },
+                          {
+                            date: "2024-01-07",
+                            steps: 1600,
+                          },
+                        ]}
+                      >
+                        <Bar
+                          dataKey="steps"
+                          fill="var(--color-steps)"
+                          radius={5}
+                          fillOpacity={0.6}
+                          activeBar={<Rectangle fillOpacity={0.8} />}
+                        />
+                        <XAxis
+                          dataKey="date"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={4}
+                          tickFormatter={(value) => {
+                            return new Date(value).toLocaleDateString("en-US", {
+                              weekday: "short",
+                            })
+                          }}
+                        />
+                        <ChartTooltip
+                          defaultIndex={2}
+                          content={
+                            <ChartTooltipContent
+                              hideIndicator
+                              labelFormatter={(value) => {
+                                return new Date(value).toLocaleDateString("en-US", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })
+                              }}
+                            />
+                          }
+                          cursor={false}
+                        />
+                        <ReferenceLine
+                          y={1200}
+                          stroke="hsl(var(--muted-foreground))"
+                          strokeDasharray="3 3"
+                          strokeWidth={1}
+                        >
+                          <Label
+                            position="insideBottomLeft"
+                            value="Average Steps"
+                            offset={10}
+                            fill="hsl(var(--foreground))"
+                          />
+                          <Label
+                            position="insideTopLeft"
+                            value="12,343"
+                            className="text-lg"
+                            fill="hsl(var(--foreground))"
+                            offset={10}
+                            startOffset={100}
+                          />
+                        </ReferenceLine>
+                      </BarChart>
+                    </ChartContainer>
+                  </CardContent>
+                  <CardFooter className="flex-col items-start gap-1">
+                    <CardDescription>
+                      Over the past 7 days, you have walked{" "}
+                      <span className="font-medium text-foreground">53,305</span> steps.
+                    </CardDescription>
+                    <CardDescription>
+                      You need{" "}
+                      <span className="font-medium text-foreground">12,584</span> more
+                      steps to reach your goal.
+                    </CardDescription>
+                  </CardFooter>
+                </Card>
+
+              </div>
+
+              <div className="grid w-full flex-1 gap-4 lg:grid-cols-1 lg:max-w-[20rem]">
+
+                <ProductInventoryStatus ean={mail.id} />
+
+                <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-5"
                 >
                   <CardContent className="flex gap-4 p-4">
@@ -578,9 +725,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                     </ChartContainer>
                   </CardContent>
 
-                </Card> */}
-
-                {/* <Card
+                </Card>
+                <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-6"
                 >
                   <CardHeader className="p-4 pb-0">
@@ -662,7 +808,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </BarChart>
                     </ChartContainer>
                   </CardContent>
-                </Card> */}
+                </Card>
 
               </div>
 
@@ -729,7 +875,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 
                 <ProductStoresSales ean={mail.id} />
 
-                {/* <Card
+                <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-2"
                 >
                   <CardHeader>
@@ -842,9 +988,9 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </ChartContainer>
                     </div>
                   </CardContent>
-                </Card> */}
+                </Card>
 
-                {/* <Card
+                <Card
                   className="max-w-xs" x-chunk="charts-01-chunk-3"
                 >
                   <CardHeader className="p-4 pb-0">
@@ -927,9 +1073,11 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       </BarChart>
                     </ChartContainer>
                   </CardContent>
-                </Card> */}
+                </Card>
 
               </div>
+
+
 
             </div>
 
