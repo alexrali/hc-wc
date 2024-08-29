@@ -447,17 +447,21 @@ export function Mail({
           withHandle
         />
 
+
         <ResizablePanel defaultSize={defaultLayout[2]}>
 
           {mail.selected ? (
             <MailDisplay mail={mails.find((item) => item.id === mail.selected) || null} />
           ) : selectedCategoryId ? (
-            <AccountDisplay account={selectedCategoryId} />
+             <AccountDisplay account={selectedCategoryId} />
+            // <div>Categoria</div>
           ) : (
-            <div>Please select a mail or an account.</div>
+            <div>Selecciona una categoria</div>
           )}
 
+
         </ResizablePanel>
+
       </ResizablePanelGroup>
 
     </TooltipProvider>

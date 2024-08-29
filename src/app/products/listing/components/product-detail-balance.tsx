@@ -94,7 +94,7 @@ export function ProductBalance({ productDetail }: ProductBalanceProps) {
     return (
 
         <Card
-            className="max-w-xs" x-chunk="charts-01-chunk-5"
+            className="max-w-lg" x-chunk="charts-01-chunk-5"
         >
             <CardContent className="flex gap-4 p-4">
                 <div className="grid items-center gap-2 w-[160px]">

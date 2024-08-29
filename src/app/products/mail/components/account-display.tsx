@@ -70,7 +70,7 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="flex items-center p-2">
+            <div className="flex items-center">
                 <div className="flex items-center gap-2">
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -85,10 +85,10 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" >
                                 <ArchiveX className="h-4 w-4" />
-                                <span className="sr-only">Move to junk</span>
+                                <span className="sr-only">Baja de Catalogo</span>
                             </Button>
                         </TooltipTrigger>
-                        <TooltipContent>Move to junk</TooltipContent>
+                        <TooltipContent>Baja de Catalogo</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger asChild>

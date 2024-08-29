@@ -17,3 +17,4 @@ export function ContentLayout({ title, children }: ContentLayoutProps) {
     </div>
   );
 }
+

@@ -38,7 +38,7 @@ export function MailList({ items }: MailListProps) {
 
   return (
     <ScrollArea className="h-screen bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex flex-col gap-2 p-2 pt-2">
+      <div className="flex flex-col p-2 gap-2">
         {items.map((item) => (
           <button
             key={item.id}

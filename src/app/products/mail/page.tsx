@@ -69,7 +69,7 @@ export default async function MailPage() {
         />
       </div>
       <ContentLayout title="Lineas">
-        <div className="hidden flex-col md:flex">
+      <div className="hidden flex-col md:flex fixed w-full">
           <Mail
             accounts={accounts}
             //mails={mails}
